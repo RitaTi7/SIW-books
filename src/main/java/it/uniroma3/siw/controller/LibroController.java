@@ -1,5 +1,35 @@
 package it.uniroma3.siw.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import it.uniroma3.siw.model.Libro;
+import it.uniroma3.siw.service.LibroService;
+
+@Controller
 public class LibroController {
+	
+	@Autowired LibroService libroService;
+	
+	@GetMapping("/libro/{id}")
+	public String vediLibro(@PathVariable("id") Long id, Model model) {
+		Libro libro= this.libroService.getLibroById(id);
+		if(libro==null)
+			return "errore.html";
+		else {
+			model.addAttribute("libro", libro);
+			return "libro.html";
+		}
+	}
+	
+	@GetMapping("/libro/")
+	public String vediLibri(Model model) {
+		model.addAttribute("libri", this.libroService.getAllLibri());
+		
+		return "libri.html";
+	}
 
 }
