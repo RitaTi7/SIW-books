@@ -15,7 +15,7 @@ public class LibroController {
 	@Autowired LibroService libroService;
 	
 	@GetMapping("/libro/{id}")
-	public String vediLibro(@PathVariable("id") Long id, Model model) {
+	public String mostraLibro(@PathVariable("id") Long id, Model model) {
 		/*Libro libro= this.libroService.getLibroById(id);
 		if(libro==null)
 			return "errore.html";
@@ -29,7 +29,7 @@ public class LibroController {
 	}
 	
 	@GetMapping("/libro/")
-	public String vediLibri(Model model) {
+	public String mostraLibri(Model model) {
 		model.addAttribute("libri", this.libroService.getAllLibri());
 		
 		return "libri.html";
