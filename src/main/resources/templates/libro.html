@@ -3,13 +3,14 @@
     <head>
         <title>Libro</title>
         <link rel="stylesheet" href="/stile.css?version=2"/>
-        <!-- inserisci immagine logo siw --> 
+		<link rel="stylesheet" href="/stile.css?version=2"/>
+		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
     </head>
 
     <body>
         <div>
             <div th:if="${libro}"> <h1 th:text="${libro.titolo}">Titolo Libro</h1></div>
-            <div>Anno di pubblicazione: <span th:text="$libro.anno">2003</span></div>
+            <div>Anno di pubblicazione: <span th:if="${libro}" th:text="${libro.anno}">2003</span></div>
         </div>
         <div th:unless="${libro}">Non sono presenti libri</div>
     </body>

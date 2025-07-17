@@ -20,7 +20,7 @@ public class Autore {
 	private String cognome;
 	private LocalDate dataNascita;
 	private LocalDate dataMorte;		//TODO: morte può essere NULL
-	private String nazionalità;			//deve essere scelto da un elenco??
+	private String nazionalita;			//deve essere scelto da un elenco??
 	
 	@ManyToMany(mappedBy="autori")
 	private List<Libro> libri;
@@ -43,7 +43,7 @@ public class Autore {
 		return dataMorte;
 	}
 	public String getNazionalità() {
-		return nazionalità;
+		return nazionalita;
 	}
 	public List<Libro> getLibri() {
 		return libri;
@@ -65,7 +65,7 @@ public class Autore {
 		this.dataMorte = dataMorte;
 	}
 	public void setNazionalità(String nazionalità) {
-		this.nazionalità = nazionalità;
+		this.nazionalita = nazionalità;
 	}
 	public void setLibri(List<Libro> libri) {
 		this.libri = libri;

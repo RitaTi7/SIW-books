@@ -16,13 +16,16 @@ public class LibroController {
 	
 	@GetMapping("/libro/{id}")
 	public String vediLibro(@PathVariable("id") Long id, Model model) {
-		Libro libro= this.libroService.getLibroById(id);
+		/*Libro libro= this.libroService.getLibroById(id);
 		if(libro==null)
 			return "errore.html";
 		else {
 			model.addAttribute("libro", libro);
 			return "libro.html";
-		}
+		}*/
+		
+		model.addAttribute("libro", this.libroService.getLibroById(id));
+		return "libro.html";
 	}
 	
 	@GetMapping("/libro/")
@@ -31,5 +34,11 @@ public class LibroController {
 		
 		return "libri.html";
 	}
-
+	
+	@GetMapping("/")
+	public String home(Model model) {
+		return "index.html";
+	}
+	
+	
 }
