@@ -12,13 +12,13 @@
 			<div th:if="${autori.isEmpty()}">Non sono presenti autori</div>
 			<ul>
 				<li th:each="autore: ${autori}">
-					<span th:text="${autore.nome} + ' ' + ${autore.cognome} + ' ('+ ${autore.nazionalita}+ ', '+ ${autore.dataNascita}">Nome Congnome (italiana, 2003-12-8 </span>
-					<span th:if="${autore.dataMorte !=null}" th:text="' / ' + ${autore.dataMorte}"></span>
+					<span th:text="${autore.nome} + ' ' + ${autore.cognome} + ' ('+ ${autore.nazionalita}+ ', '+ ${#temporals.format(autore.dataNascita, 'dd-MM-yyyy')}">Nome Congnome (italiana, 2003-12-8 </span>
+					<span th:if="${autore.dataMorte !=null}" th:text="' / ' + ${#temporals.format(autore.dataMorte, 'dd-MM-yyyy')}"></span>
 					<span th:text="')'">)</span> 
 					<!--TODO: modifica la visualizzazione delle date in: dd-MM-yyyy-->
 					
-					<!--<a th:href="@{'/eliminaAutore/' + ${autore.id}}"><button type="button">Rimuovi</button></a>
-					<a th:href="@{'/modificaAutore/' + ${autore.id}}"><button type="button">Modifica</button></a>-->
+					<a th:href="@{'/eliminaAutore/' + ${autore.id}}"><button type="button">Rimuovi</button></a>
+					<a th:href="@{'/modificaAutore/' + ${autore.id}}"><button type="button">Modifica</button></a>
 				</li>
 			</ul>
 			<span><a th:href="@{/formNuovoAutore}"><button type="button">Nuovo autore</button></a></span>

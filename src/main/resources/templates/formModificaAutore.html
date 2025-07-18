@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Modifica autore</title>
+		<link rel="stylesheet" href="/stile.css?version=2"/>
+		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
+	</head>
+	<body>
+		<h1>Modifica l'autore</h1>
+		<form th:action="@{'/modificaAutore/' + ${autore.id}}" method="POST" th:object="${autore}">
+			<div th:if="${#fields.hasGlobalErrors()}">
+				<p th:each="err: ${#fields.globalErrors()}" th:text="${err}">...</p>
+			</div>
+			
+			<div>
+				<label>Nome:</label>
+				<span><input type="text" th:field="${autore.nome}"/></span>
+				<span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+			</div>
+			<div>
+				<label>Cognome:</label>
+				<span><input type="text" th:field="${autore.cognome}"/></span>
+				<span th:if="${#fields.hasErrors('cognome')}" th:errors="*{cognome}"></span>
+			</div>
+			
+			<div>
+				<label>Data di nascita:</label>
+				<span><input type="date" th:field="*{dataNascita}"/></span>
+				<span th:if="${#fields.hasErrors('dataNascita')}" th:errors="*{dataNascita}"></span>
+			</div>
+			<div>
+				<label>Data di morte:</label>
+				<span><input type="date" th:field="${autore.dataMorte}"/></span>
+				<span th:if="${#fields.hasErrors('dataMorte')}" th:errors="*{dataMorte}"></span>
+			</div>
+			
+			<div>
+				<label>Nazionalità:</label>
+				<span><input type="text" th:field="${autore.nazionalita}"/></span>
+				<span th:if="${#fields.hasErrors('nazionalita')}" th:errors="*{nazionalita}"></span>
+			</div>
+			
+			<div>
+				<span><button type="submit">Conferma</button></span>
+				<div><a th:href="@{'/modificaAutore/' + ${autore.id}}"><button type="button">Annulla</button></a></div>
+			</div>
+		</form>
+	</body>
+</html>

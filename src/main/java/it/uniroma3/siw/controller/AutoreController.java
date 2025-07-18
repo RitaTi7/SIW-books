@@ -61,5 +61,42 @@ public class AutoreController {
 		model.addAttribute("autori", this.autoreService.getAllAutori());
 		return "aggiornaAutori.html";
 	}
+	
+	@GetMapping("/eliminaAutore/{id}")
+	public String eliminaAutore(@PathVariable("id") Long id, Model model) {
+		this.autoreService.deleteAutoreById(id);
+		model.addAttribute("autori", this.autoreService.getAllAutori());
+		return "aggiornaAutori.html";
+	}
+	
+	@GetMapping("/modificaAutore/{id}")
+	public String modificaAutore(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("autore", this.autoreService.getAutoreById(id));
+		return "modificaAutore.html";
+	}
+	
+	@GetMapping("/formModificaAutore/{id}")
+	public String formModificaAutore(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("autore", this.autoreService.getAutoreById(id));
+		return "formModificaAutore.html";
+	}
+	
+	@PostMapping("/modificaAutore/{id}")
+	public String modificaLibro(@PathVariable("id") Long id, @Valid @ModelAttribute("autore") Autore autoreModificato, BindingResult bindingResult, Model model) {
+		if(bindingResult.hasErrors())
+			return "formModificaAutore.html";
+		else {
+			Autore autoreEsistente= this.autoreService.getAutoreById(id);
+			autoreEsistente.setNome(autoreModificato.getNome());
+			autoreEsistente.setCognome(autoreModificato.getCognome());
+			autoreEsistente.setDataNascita(autoreModificato.getDataNascita());
+			//if(autoreModificato.getDataMorte()!=null)
+			autoreEsistente.setDataMorte(autoreModificato.getDataMorte());
+			autoreEsistente.setNazionalita(autoreModificato.getNazionalita());
+			this.autoreService.save(autoreEsistente);
+			model.addAttribute("autori", this.autoreService.getAllAutori());
+			return "aggiornaAutori.html";
+		}
+	}
 
 }

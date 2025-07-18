@@ -26,7 +26,9 @@ public class Autore {
 	private String cognome;
 	
 	@NotNull
+	@DateTimeFormat(pattern= "yyyy-MM-dd")
 	private LocalDate dataNascita;		//TODO: la nascita non può superare la morte
+	@DateTimeFormat(pattern= "yyyy-MM-dd")
 	private LocalDate dataMorte;		//TODO: morte può essere NULL e non può superare la data corrente
 	@NotBlank
 	private String nazionalita;			//deve essere scelto da un elenco??

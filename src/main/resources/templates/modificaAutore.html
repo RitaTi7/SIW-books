@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Modifica autore</title>
+		<link rel="stylesheet" href="/stile.css?version=2"/>
+		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
+	</head>
+	<body>
+		<div>
+		    <div th:if="${autore}"> <h1 th:text="${autore.nome} + ' ' + ${autore.cognome}">Nome Cognome</h1>
+			    <div>Data di nascita: <span th:text="${#temporals.format(autore.dataNascita, 'dd-MM-yyyy')}">2003-12-08</span></div>
+				<div th:if="${autore.dataMorte != null}">Data morte: <span th:text="${#temporals.format(autore.dataMorte, 'dd-MM-yyyy')}">2021-01-22</span></div>
+				<div>Nazionalità: <span th:text="${autore.nazionalita}">europea</span></div>
+			</div>
+		</div>
+        <div th:unless="${autore}">Questo autore non è presente</div>
+		<div>
+			<a th:href="@{'/formModificaAutore/' + ${autore.id}}"><button type="button">Modifica dati</button></a>
+			<!--<a th:href="@{'/modificaLibri/' + ${autore.id}"><button type="button">Modifica libri</button> </a>-->
+			<a th:href="@{/aggiornaAutori}"><button type="button">Indietro</button></a>
+		</div>
+	</body>
+</html>
