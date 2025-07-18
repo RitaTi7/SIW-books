@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Aggiorna libri</title>
+		<link rel="stylesheet" href="/stile.css?version=2"/>
+		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
+	</head>
+	
+	<body>
+		<div>
+			<h1>Elenco dei libri</h1>
+			<div th:if="${libri.isEmpty()}">Non sono presenti libri</div>
+			<ul>
+				<li th:each="libro: ${libri}">
+					<span th:text="${libro.titolo} + ' (' + ${libro.anno} + ')'">libro! (2003)</span> 
+					<a th:href="@{/eliminaLibro}"><button type="button">Rimuovi</button></a>
+					<a th:href="@{/modificaLibro}"><button type="button">Modifica</button></a>
+				</li>
+			</ul>
+			<span><a th:href="@{/formNuovoLibro}"><button type="button">Nuovo libro</button></a></span>
+		</div>
+	</body>
+</html>

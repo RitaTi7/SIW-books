@@ -14,8 +14,7 @@ public class LibroService {
 	@Autowired LibroRepository libroRepository;
 	
 	public Libro getLibroById(Long id) {
-		Optional<Libro> l= this.libroRepository.findById(id); 
-		
+		Optional<Libro> l= this.libroRepository.findById(id); 	
 		if(l.isEmpty())						//oppure si può usare orElse(null)... vedi
 			return null;
 		else 
@@ -25,4 +24,10 @@ public class LibroService {
 	public Iterable<Libro> getAllLibri(){
 		return this.libroRepository.findAll();
 	}
+	
+	public void save(Libro libro) {
+		libroRepository.save(libro);
+	}
+	
+	
 }

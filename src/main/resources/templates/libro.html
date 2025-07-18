@@ -3,7 +3,6 @@
     <head>
         <title>Libro</title>
         <link rel="stylesheet" href="/stile.css?version=2"/>
-		<link rel="stylesheet" href="/stile.css?version=2"/>
 		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
     </head>
 
@@ -13,5 +12,11 @@
             <div>Anno di pubblicazione: <span th:if="${libro}" th:text="${libro.anno}">2003</span></div>
         </div>
         <div th:unless="${libro}">Non sono presenti libri</div>
+		
+		<div>
+			<a th:href="@{/libro}">
+				<button type="button">Elenco dei libri</button>
+			</a>
+		</div>
     </body>
 </html>
