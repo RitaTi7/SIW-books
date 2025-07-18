@@ -68,14 +68,37 @@ public class LibroController {
 		return "aggiornaLibri.html";
 	}
 	
-	@GetMapping("/eliminaLibro")
-	public String eliminaLibro(Model model) {
-		return "eliminaLibro.html";
+	@GetMapping("/eliminaLibro/{id}")
+	public String eliminaLibro(@PathVariable ("id") Long id, Model model) {
+		this.libroService.deleteLibroById(id);
+		model.addAttribute("libri", this.libroService.getAllLibri());
+		return "aggiornaLibri.html";
 	}
 	
-	@GetMapping("/modificaLibro")
-	public String modificaLibro(Model model) {
+	@GetMapping("/modificaLibro/{id}")
+	public String modificaLibro(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("libro", this.libroService.getLibroById(id));
 		return "modificaLibro.html";
+	}
+	
+	@GetMapping("/formModificaLibro/{id}")
+	public String formModificaLibro(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("libro", this.libroService.getLibroById(id));
+		return "formModificaLibro.html";
+	}
+	
+	@PostMapping("/modificaLibro/{id}")
+	public String modificaLibro(@PathVariable("id") Long id, @Valid @ModelAttribute("libro") Libro libroModificato, BindingResult bindingResult, Model model) {
+		if(bindingResult.hasErrors())
+			return "formModificaLibro.html";
+		else {
+			Libro libroEsistente= this.libroService.getLibroById(id);
+			libroEsistente.setTitolo(libroModificato.getTitolo());
+			libroEsistente.setAnno(libroModificato.getAnno());
+			this.libroService.save(libroEsistente);
+			model.addAttribute("libri", this.libroService.getAllLibri());
+			return "aggiornaLibri.html";
+		}
 	}
 	
 }

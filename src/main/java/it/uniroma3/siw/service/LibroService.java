@@ -26,7 +26,11 @@ public class LibroService {
 	}
 	
 	public void save(Libro libro) {
-		libroRepository.save(libro);
+		this.libroRepository.save(libro);
+	}
+	
+	public void deleteLibroById(Long id) {
+		this.libroRepository.deleteById(id);
 	}
 	
 	

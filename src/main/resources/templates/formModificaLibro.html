@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Nuovo Libro</title>
+		<title>Modifica libro</title>
 		<link rel="stylesheet" href="/stile.css?version=2"/>
-		<link rel="icon" href="piuma.jpg" type="/image/JPG" />		
+		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
 	</head>
-	
 	<body>
-		<h1>Aggiungi un libro</h1>
-		<form th:action="@{/libro}" method="POST" th:object="${libro}">
+		<h1>Modifica il libro</h1>
+		<form th:action="@{'/modificaLibro/' + ${libro.id}}" method="POST" th:object="${libro}">
 			<div th:if="${#fields.hasGlobalErrors()}">
 				<p th:each="err: ${#fields.globalErrors()}" th:text="${err}">...</p>
 			</div>
@@ -23,10 +22,9 @@
 				<span><input type="text" th:field="${libro.anno}"/></span>
 				<span th:if="${#fields.hasErrors('anno')}" th:errors="*{anno}"></span>
 			</div>
-			
 			<div>
 				<span><button type="submit">Conferma</button></span>
-				<div><a th:href="@{/aggiornaLibri}"><button type="button">Annulla</button></a></div>
+				<div><a th:href="@{'/modificaLibro/' + ${libro.id}}"><button type="button">Annulla</button></a></div>
 			</div>
 		</form>
 	</body>
