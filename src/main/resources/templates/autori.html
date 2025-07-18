@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Autori</title>
+		<link rel="stylesheet" href="/stile.css?version=2"/>
+		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
+    </head>
+    <body>
+        <div>
+            <h1>Elenco degli autori</h1>
+            <div th:if="${autori.isEmpty()}">Non sono presenti autori</div>
+            <ul>
+                <li th:each="autore: ${autori}">
+                    <a th:href="@{'/autore'+'/'+ ${autore.id}}" th:text="|${autore.nome} ${autore.cognome}|">Nome Cognome</a>
+                </li>
+            </ul>			
+			<span><a th:href="@{/aggiornaAutori}"><button type="button">Aggiorna</button></a></span>
+			<div><a th:href="@{/}"><button type="button">Home</button></a></div>
+        </div>
+    </body>
+</html>

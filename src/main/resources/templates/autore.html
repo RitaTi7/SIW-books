@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Autore</title>
+        <link rel="stylesheet" href="/stile.css?version=2"/>
+		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
+    </head>
+
+    <body>
+        <div>
+            <div th:if="${autore}"> <h1 th:text="|${autore.nome} ${autore.cognome}|">Nome Cognome</h1>
+		        <div>Data di nascita: <span th:if="${autore}" th:text="${autore.dataNascita}">2003</span></div>
+				<div th:if="${autore.dataMorte != null}">Data di morte: <span th:text="${autore.dataMorte}"></span></div>
+				<div>Nazionalità: <span th:if="${autore.nazionalita!=null}" th:text="${autore.nazionalita}">non specificata</span>
+					<!-- non so se serve: <span th:unless="${autore.nazionalita !=null}">non specificata</span>-->
+				</div>
+			</div>
+        </div>
+        <div th:unless="${autore}">Non c'è nessun autore</div>
+		
+		<div>
+			<a th:href="@{/autore}">
+				<button type="button">Elenco degli autori</button>
+			</a>
+		</div>
+    </body>
+</html>

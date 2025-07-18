@@ -3,11 +3,15 @@ package it.uniroma3.siw.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Autore {
@@ -16,15 +20,22 @@ public class Autore {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotBlank
 	private String nome;
+	@NotBlank
 	private String cognome;
-	private LocalDate dataNascita;
-	private LocalDate dataMorte;		//TODO: morte può essere NULL
+	
+	@NotNull
+	private LocalDate dataNascita;		//TODO: la nascita non può superare la morte
+	private LocalDate dataMorte;		//TODO: morte può essere NULL e non può superare la data corrente
+	@NotBlank
 	private String nazionalita;			//deve essere scelto da un elenco??
+	
 	
 	@ManyToMany(mappedBy="autori")
 	private List<Libro> libri;
 	
+	//fotografia
 	
 	
 	public Long getId() {
@@ -42,7 +53,7 @@ public class Autore {
 	public LocalDate getDataMorte() {
 		return dataMorte;
 	}
-	public String getNazionalità() {
+	public String getNazionalita() {
 		return nazionalita;
 	}
 	public List<Libro> getLibri() {
@@ -64,7 +75,7 @@ public class Autore {
 	public void setDataMorte(LocalDate dataMorte) {
 		this.dataMorte = dataMorte;
 	}
-	public void setNazionalità(String nazionalità) {
+	public void setNazionalita(String nazionalità) {
 		this.nazionalita = nazionalità;
 	}
 	public void setLibri(List<Libro> libri) {
@@ -79,12 +90,12 @@ public class Autore {
 		
 		Autore a= (Autore) obj;
 		
-		return a.getNome().equals(this.getNome()) && a.getCognome().equals(this.getCognome()) && a.getDataNascita().equals(this.getDataNascita()) && a.getNazionalità().equals(this.getNazionalità());
+		return a.getNome().equals(this.getNome()) && a.getCognome().equals(this.getCognome()) && a.getDataNascita().equals(this.getDataNascita()) && a.getNazionalita().equals(this.getNazionalita());
 	}
 	
 	@Override
 	public int hashCode() {
-		return this.getClass().hashCode()+this.getNome().hashCode()+this.getCognome().hashCode()+this.getDataNascita().hashCode()+this.getNazionalità().hashCode();
+		return this.getClass().hashCode()+this.getNome().hashCode()+this.getCognome().hashCode()+this.getDataNascita().hashCode()+this.getNazionalita().hashCode();
 	}
 
 }

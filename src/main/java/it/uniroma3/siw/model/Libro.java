@@ -30,6 +30,9 @@ public class Libro {
 	@ManyToMany
 	private List<Autore> autori;
 	
+	//immagini
+	//collana
+	
 	public Long getId() {
 		return id;
 	}
