@@ -90,7 +90,6 @@ public class AutoreController {
 			autoreEsistente.setNome(autoreModificato.getNome());
 			autoreEsistente.setCognome(autoreModificato.getCognome());
 			autoreEsistente.setDataNascita(autoreModificato.getDataNascita());
-			//if(autoreModificato.getDataMorte()!=null)
 			autoreEsistente.setDataMorte(autoreModificato.getDataMorte());
 			autoreEsistente.setNazionalita(autoreModificato.getNazionalita());
 			this.autoreService.save(autoreEsistente);

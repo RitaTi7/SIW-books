@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.model.Libro;
+import it.uniroma3.siw.service.AutoreService;
 import it.uniroma3.siw.service.LibroService;
 import jakarta.validation.Valid;
 
@@ -17,6 +18,7 @@ import jakarta.validation.Valid;
 public class LibroController {
 	
 	@Autowired LibroService libroService;
+	@Autowired AutoreService autoreService;
 	
 	@GetMapping("/libro/{id}")
 	public String mostraLibro(@PathVariable("id") Long id, Model model) {
@@ -99,6 +101,12 @@ public class LibroController {
 			model.addAttribute("libri", this.libroService.getAllLibri());
 			return "aggiornaLibri.html";
 		}
+	}
+	
+	@GetMapping("/modifcaAutoriDiLibro/{id}")
+	public String modificaAutoriDiLibro(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("autori", this.autoreService.getAllAutori());
+		return "";
 	}
 	
 }
