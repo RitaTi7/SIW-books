@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Modifica autori di un libro</title>
+		<link rel="stylesheet" href="/stile.css?version=2"/>
+		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
+	</head>
+	
+	<body>
+		<div>
+			<div th:if="${libro}">
+			    <h1 th:text="${libro.titolo}">Titolo Libro</h1>
+			    <div>Anno di pubblicazione: <span th:text="${libro.anno}">2003</span></div>
+			</div>
+			<h2>Elenco degli autori</h2>
+			<div th:if="${autori.isEmpty()}">Non sono presenti autori</div>
+			<ul>
+				<li th:each="autore: ${autori}">
+					<span th:text="${autore.nome} + ' ' + ${autore.cognome} + ' ('+ ${autore.nazionalita}+ ', '+ ${#temporals.format(autore.dataNascita, 'dd-MM-yyyy')}">Nome Congnome (italiana, 2003-12-8 </span>
+					<span th:if="${autore.dataMorte !=null}" th:text="' / ' + ${#temporals.format(autore.dataMorte, 'dd-MM-yyyy')}"></span>
+					<span th:text="')'">)</span> 
+					
+					<a th:href="@{'/eliminaAutore/' + ${autore.id}}"><button type="button">Rimuovi</button></a>
+				<!--	<a th:href="@{'/modificaAutore/' + ${autore.id}}"><button type="button">Modifica</button></a>-->
+				</li>
+			</ul>
+			<span><a th:href="@{'/aggiungiAutoriDiLibro/'+ ${libro.id}}"><button type="button">Aggiungi autore</button></a></span>
+			<div><a th:href="@{'/modificaLibro/'+ ${libro.id}}"><button type="button">Indietro</button></a></div>
+		</div>
+	</body>
+</html>

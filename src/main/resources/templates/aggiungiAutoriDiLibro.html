@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Autori non del libro</title>
+		<link rel="stylesheet" href="/stile.css?version=2"/>
+		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
+	</head>
+	
+	<body>
+		<div>
+			<h1>Elenco degli autori che non hanno scritto il libro</h1>
+			<div th:if="${autori.isEmpty()}">Non sono presenti autori</div>
+			<div th:unless="${autori.isEmpty()}">
+				<ul>
+					<li th:each="autore: ${autori}">
+						<span th:text="${autore.nome} + ' ' + ${autore.cognome} + ' ('+ ${autore.nazionalita}+ ', '+ ${#temporals.format(autore.dataNascita, 'dd-MM-yyyy')}">Nome Congnome (italiana, 2003-12-8 </span>
+						<span th:if="${autore.dataMorte !=null}" th:text="' / ' + ${#temporals.format(autore.dataMorte, 'dd-MM-yyyy')}"></span>
+						<span th:text="')'">)</span> 
+						
+						<a th:href="@{'/aggiungiAutoreALibro/' + ${libro.id} + '/' + ${autore.id}}"><button type="button">Aggiungi</button></a>
+					</li>
+				</ul>
+			</div>
+			<div><a th:href="@{'/modificaAutoriDiLibro/' + ${libro.id}}"><button type="button">Fine</button></a></div>
+		</div>
+	</body>
+</html>

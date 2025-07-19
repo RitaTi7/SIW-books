@@ -6,15 +6,24 @@
 		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
 	</head>
 	<body>
-		<div>
-		    <div th:if="${libro}"> <h1 th:text="${libro.titolo}">Titolo Libro</h1></div>
-		    <div>Anno di pubblicazione: <span th:if="${libro}" th:text="${libro.anno}">2003</span></div>
+		<div th:if="${libro}">
+		    <h1 th:text="${libro.titolo}">Titolo Libro</h1>
+		    <div>Anno di pubblicazione: <span th:text="${libro.anno}">2003</span></div>
 		</div>
         <div th:unless="${libro}">Questo libro non è presente</div>
+		<h2>Elenco degli autori</h2>
+			<div th:if="${autori.isEmpty()}">Non sono presenti autori</div>
+			<ul>
+				<li th:each="autore: ${autori}">
+					<span th:text="${autore.nome} + ' ' + ${autore.cognome} + ' ('+ ${autore.nazionalita}+ ', '+ ${#temporals.format(autore.dataNascita, 'dd-MM-yyyy')}">Nome Congnome (italiana, 2003-12-8 </span>
+					<span th:if="${autore.dataMorte !=null}" th:text="' / ' + ${#temporals.format(autore.dataMorte, 'dd-MM-yyyy')}"></span>
+					<span th:text="')'">)</span>
+				</li>
+			</ul>
 		<div>
 			<a th:href="@{'/formModificaLibro/' + ${libro.id}}"><button type="button">Modifica dati</button></a>
-<!--			<a th:href="@{'/modificaAutori/' + ${libro.id}"><button type="button">Modifica autori</button> </a>-->
-			<a th:href="@{/aggiornaLibri}"><button type="button">Indietro</button></a>
+			<a th:href="@{'/modificaAutoriDiLibro/' + ${libro.id}}"><button type="button">Modifica autori</button></a>
 		</div>
+		<div><a th:href="@{/aggiornaLibri}"><button type="button">Indietro</button></a></div>
 	</body>
 </html>

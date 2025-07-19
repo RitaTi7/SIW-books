@@ -1,5 +1,8 @@
 package it.uniroma3.siw.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import it.uniroma3.siw.model.Autore;
 import it.uniroma3.siw.model.Libro;
 import it.uniroma3.siw.service.AutoreService;
 import it.uniroma3.siw.service.LibroService;
@@ -29,8 +33,10 @@ public class LibroController {
 			model.addAttribute("libro", libro);
 			return "libro.html";
 		}*/
-		
-		model.addAttribute("libro", this.libroService.getLibroById(id));
+		Libro libro=this.libroService.getLibroById(id);
+		List<Autore> autori= libro.getAutori();
+		model.addAttribute("libro", libro);
+		model.addAttribute("autori", autori);
 		return "libro.html";
 	}
 	
@@ -65,7 +71,7 @@ public class LibroController {
 	}
 	
 	@GetMapping("/aggiornaLibri")
-	public String aggiornLibri(Model model) {
+	public String aggiornaLibri(Model model) {
 		model.addAttribute("libri", this.libroService.getAllLibri());
 		return "aggiornaLibri.html";
 	}
@@ -79,7 +85,10 @@ public class LibroController {
 	
 	@GetMapping("/modificaLibro/{id}")
 	public String modificaLibro(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("libro", this.libroService.getLibroById(id));
+		Libro libro=this.libroService.getLibroById(id);
+		model.addAttribute("libro", libro);
+		model.addAttribute("autori", libro.getAutori());
+		
 		return "modificaLibro.html";
 	}
 	
@@ -103,10 +112,66 @@ public class LibroController {
 		}
 	}
 	
-	@GetMapping("/modifcaAutoriDiLibro/{id}")
+	@GetMapping("/modificaAutoriDiLibro/{id}")
 	public String modificaAutoriDiLibro(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("autori", this.autoreService.getAllAutori());
-		return "";
+		Libro libro= this.libroService.getLibroById(id);
+		List<Autore> autori= libro.getAutori();
+		
+		model.addAttribute("libro", libro);
+		model.addAttribute("autori", autori);
+		
+		return "modificaAutoriDiLibro.html";
 	}
 	
+	@GetMapping("/rimuoviAutoreDaLibro/{idLibro}/{idAutore}")
+	public String rimuoviAutoreDaLibro(@PathVariable("idLibro") Long idLibro, @PathVariable Long idAutore, Model model) {
+		Libro libro= libroService.getLibroById(idLibro);
+		Autore autore= autoreService.getAutoreById(idAutore);
+		List<Autore> autoriDiLibro= libro.getAutori();
+		List<Libro> libriDiAutore= autore.getLibri();
+		
+		autoriDiLibro.remove(autore);
+		libriDiAutore.remove(libro);
+		
+		libroService.save(libro);
+		autoreService.save(autore);
+		
+		
+		return "redirect:/modificaAutoriDiLibro/"+ libro.getId();
+	}
+	
+	@GetMapping("/aggiungiAutoriDiLibro/{id}")
+	public String aggiungiAutoriDiLibro(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("libro", this.libroService.getLibroById(id));
+		model.addAttribute("autori", this.autoriDaAggiungere(id));
+		return "aggiungiAutoriDiLibro.html";
+	}
+	
+	@GetMapping("/aggiungiAutoreALibro/{idLibro}/{idAutore}")
+	public String aggiungiAutoreALibro(@PathVariable("idLibro") Long idLibro, @PathVariable("idAutore") Long idAutore, Model model) {
+		Libro libro= this.libroService.getLibroById(idLibro);
+		Autore autore= this.autoreService.getAutoreById(idAutore);
+		libro.getAutori().add(autore);
+		autore.getLibri().add(libro);
+		
+		this.libroService.save(libro);
+		this.autoreService.save(autore);
+		
+		model.addAttribute("libro", libro);
+		model.addAttribute("autori", this.autoriDaAggiungere(idLibro));
+		
+		return "redirect:/aggiungiAutoriDiLibro/" + libro.getId();
+	}
+	
+
+	
+	/*ritorna la lista degli autori che non sono associati al libro di id idLibro*/
+	private List<Autore> autoriDaAggiungere(Long idLibro){
+		List<Autore> autori= new ArrayList<>();
+		for(Autore a: autoreService.findAutoriNonInLibro(idLibro)) {
+			autori.add(a);
+		}
+		
+		return autori;
+	}
 }

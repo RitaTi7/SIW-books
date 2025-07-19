@@ -32,4 +32,9 @@ public class AutoreService {
 	public void deleteAutoreById(Long id) {
 		this.autoreRepository.deleteById(id);
 	}
+	
+	public Iterable<Autore> findAutoriNonInLibro(Long idLibro){
+		return this.autoreRepository.findAutoriNonInLibro(idLibro);
+		
+	}
 }
