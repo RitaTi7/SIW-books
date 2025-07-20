@@ -14,9 +14,21 @@
 			</div>
 		</div>
         <div th:unless="${autore}">Questo autore non è presente</div>
+		
+		<div>
+            <h2>Elenco dei libri dell'autore</h2>
+            <div th:if="${libri.isEmpty()}">Non sono presenti libri</div>
+            <div th:unless="${libri.isEmpty()}">
+				<ul>
+	                <li th:each="libro: ${libri}">
+	                    <a th:href="@{'/libro'+'/'+ ${libro.id}}" th:text="|${libro.titolo} ${libro.anno}|">titolo (2003)</a>
+					</li>
+	            </ul>
+			</div>	
+					
 		<div>
 			<a th:href="@{'/formModificaAutore/' + ${autore.id}}"><button type="button">Modifica dati</button></a>
-			<!--<a th:href="@{'/modificaLibri/' + ${autore.id}"><button type="button">Modifica libri</button> </a>-->
+			<a th:href="@{'/modificaLibriDiAutore/' + ${autore.id}}"><button type="button">Modifica libri</button></a>
 			<a th:href="@{/aggiornaAutori}"><button type="button">Indietro</button></a>
 		</div>
 	</body>

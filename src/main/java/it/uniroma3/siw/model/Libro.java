@@ -1,6 +1,7 @@
 package it.uniroma3.siw.model;
 
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,10 +29,11 @@ public class Libro {
 	private Integer anno;
 	
 	@ManyToMany
-	private List<Autore> autori;
+	private Set<Autore> autori;
 	
 	//immagini
 	//collana
+	//genere
 	
 	public Long getId() {
 		return id;
@@ -45,7 +47,7 @@ public class Libro {
 		return anno;
 	}
 	
-	public List<Autore> getAutori() {
+	public Set<Autore> getAutori() {
 		return autori;
 	}
 	
@@ -61,7 +63,7 @@ public class Libro {
 		this.anno = anno;
 	}
 	
-	public void setAutori(List<Autore> autori) {
+	public void setAutori(Set<Autore> autori) {
 		this.autori = autori;
 	}
 	

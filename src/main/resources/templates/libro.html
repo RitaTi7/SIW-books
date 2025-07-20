@@ -16,7 +16,7 @@
 			<span th:unless="${autori.isEmpty()}">
 				<ul>
 					<li th:each="autore: ${autori}">
-						<a th:href="@{'/autore' + '/' + ${autore.id}" th:text="|${autore.nome} ${autore.cognome}|">Rita Tiani</a>
+						<a th:href="@{'/autore/' + ${autore.id}}" th:text="|${autore.nome} ${autore.cognome}|">Rita Tiani</a>
 					</li>
 				</ul>
 			</span>

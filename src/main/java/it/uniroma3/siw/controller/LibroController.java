@@ -2,6 +2,7 @@ package it.uniroma3.siw.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import it.uniroma3.siw.model.Autore;
 import it.uniroma3.siw.model.Libro;
 import it.uniroma3.siw.service.AutoreService;
 import it.uniroma3.siw.service.LibroService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @Controller
@@ -34,7 +36,7 @@ public class LibroController {
 			return "libro.html";
 		}*/
 		Libro libro=this.libroService.getLibroById(id);
-		List<Autore> autori= libro.getAutori();
+		Set<Autore> autori= libro.getAutori();
 		model.addAttribute("libro", libro);
 		model.addAttribute("autori", autori);
 		return "libro.html";
@@ -77,8 +79,8 @@ public class LibroController {
 	}
 	
 	@GetMapping("/eliminaLibro/{id}")
-	public String eliminaLibro(@PathVariable ("id") Long id, Model model) {
-		this.libroService.deleteLibroById(id);
+	public String eliminaLibro(@PathVariable ("id") Long id, Model model) {		//TODO: guarda eliminaAutore-> valuta se adottare la stessa soluzione
+		this.libroService.deleteLibroById(id);									//funziona grazie al mappedBy in autore (l'owner della tabella di join è Libro (libro_autori)
 		model.addAttribute("libri", this.libroService.getAllLibri());
 		return "aggiornaLibri.html";
 	}
@@ -115,7 +117,7 @@ public class LibroController {
 	@GetMapping("/modificaAutoriDiLibro/{id}")
 	public String modificaAutoriDiLibro(@PathVariable("id") Long id, Model model) {
 		Libro libro= this.libroService.getLibroById(id);
-		List<Autore> autori= libro.getAutori();
+		Set<Autore> autori= libro.getAutori();
 		
 		model.addAttribute("libro", libro);
 		model.addAttribute("autori", autori);
@@ -123,28 +125,32 @@ public class LibroController {
 		return "modificaAutoriDiLibro.html";
 	}
 	
+	@Transactional
 	@GetMapping("/rimuoviAutoreDaLibro/{idLibro}/{idAutore}")
 	public String rimuoviAutoreDaLibro(@PathVariable("idLibro") Long idLibro, @PathVariable Long idAutore, Model model) {
 		Libro libro= libroService.getLibroById(idLibro);
 		Autore autore= autoreService.getAutoreById(idAutore);
-		List<Autore> autoriDiLibro= libro.getAutori();
-		List<Libro> libriDiAutore= autore.getLibri();
+//		Set<Autore> autoriDiLibro= libro.getAutori();
+//		List<Libro> libriDiAutore= autore.getLibri();
 		
-		autoriDiLibro.remove(autore);
-		libriDiAutore.remove(libro);
+		libro.getAutori().remove(autore);
+		autore.getLibri().remove(libro);
 		
-		libroService.save(libro);
-		autoreService.save(autore);
+		this.libroService.save(libro);
+		this.autoreService.save(autore);
+		
+//		model.addAttribute("libro", libro);
+//		model.addAttribute("autori", this.autoriDaAggiungere(idLibro));
 		
 		
 		return "redirect:/modificaAutoriDiLibro/"+ libro.getId();
 	}
 	
-	@GetMapping("/aggiungiAutoriDiLibro/{id}")
-	public String aggiungiAutoriDiLibro(@PathVariable("id") Long id, Model model) {
+	@GetMapping("/aggiungiAltriAutoriALibro/{id}")
+	public String aggiungiAltriAutoriALibro(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("libro", this.libroService.getLibroById(id));
 		model.addAttribute("autori", this.autoriDaAggiungere(id));
-		return "aggiungiAutoriDiLibro.html";
+		return "aggiungiAltriAutoriALibro.html";
 	}
 	
 	@GetMapping("/aggiungiAutoreALibro/{idLibro}/{idAutore}")
@@ -160,15 +166,16 @@ public class LibroController {
 		model.addAttribute("libro", libro);
 		model.addAttribute("autori", this.autoriDaAggiungere(idLibro));
 		
-		return "redirect:/aggiungiAutoriDiLibro/" + libro.getId();
+		return "redirect:/aggiungiAltriAutoriALibro/" + libro.getId();
 	}
 	
 
 	
 	/*ritorna la lista degli autori che non sono associati al libro di id idLibro*/
+	//TODO: ha senso cambiare il tipo di ritorno da List a Set?? (così funziona)
 	private List<Autore> autoriDaAggiungere(Long idLibro){
 		List<Autore> autori= new ArrayList<>();
-		for(Autore a: autoreService.findAutoriNonInLibro(idLibro)) {
+		for(Autore a: this.autoreService.findAutoriNonInLibro(idLibro)) {
 			autori.add(a);
 		}
 		

@@ -9,11 +9,13 @@
         <div>
             <h1>Elenco dei libri</h1>
             <div th:if="${libri.isEmpty()}">Non sono presenti libri</div>
-            <ul>
-                <li th:each="libro: ${libri}">
-                    <a th:href="@{'/libro'+'/'+ ${libro.id}}" th:text="|${libro.titolo} ${libro.anno}|">titolo (2003)</a>
-                </li>
-            </ul>			
+            <div th:unless="${libri.isEmpty()}">
+				<ul>
+	                <li th:each="libro: ${libri}">
+	                    <a th:href="@{'/libro'+'/'+ ${libro.id}}" th:text="|${libro.titolo} ${libro.anno}|">titolo (2003)</a>
+	                </li>
+	            </ul>
+			</div>			
 			<span><a th:href="@{/aggiornaLibri}"><button type="button">Aggiorna</button></a></span>
 			<div><a th:href="@{/}"><button type="button">Home</button></a></div>
         </div>

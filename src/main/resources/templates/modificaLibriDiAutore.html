@@ -17,6 +17,7 @@
 			</div>
         </div>
         <div th:unless="${autore}">Non c'è nessun autore</div>
+		
 		<div>
             <h2>Elenco dei libri dell'autore</h2>
             <div th:if="${libri.isEmpty()}">Non sono presenti libri</div>
@@ -24,14 +25,18 @@
 				<ul>
 	                <li th:each="libro: ${libri}">
 	                    <a th:href="@{'/libro'+'/'+ ${libro.id}}" th:text="|${libro.titolo} ${libro.anno}|">titolo (2003)</a>
+						<span><a th:href="@{'/rimuoviLibroDaAutore/'+ ${autore.id} +'/'+ ${libro.id}}"><button type="button">Rimuovi</button></a></span>
 					</li>
 	            </ul>
-			</div>	
-					
-		</div>
+			</div>			
+			
+        </div>
+			<a th:href="@{'/aggiungiAltriLibriAdAutore/' + ${autore.id}}"><button type="button">Aggiungi</button></a>
+		
+		
 		<div>
-			<a th:href="@{/autore}">
-				<button type="button">Elenco degli autori</button>
+			<a th:href="@{'/modificaAutore/'+ ${autore.id}}">
+				<button type="button">Indietro</button>
 			</a>
 		</div>
     </body>

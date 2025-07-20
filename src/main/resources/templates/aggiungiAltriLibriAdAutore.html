@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Libri non dell'autore</title>
+		<link rel="stylesheet" href="/stile.css?version=2"/>
+		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
+    </head>
+    <body>
+        <div>
+            <h1>Elenco dei libri non scritti dall'autore</h1>
+            <div th:if="${libri.isEmpty()}">Non sono presenti libri</div>
+            <div th:unless="${libri.isEmpty()}">
+				<ul>
+	                <li th:each="libro: ${libri}">
+	                    <span th:text="|${libro.titolo} ${libro.anno}|">titolo (2003)</span>
+						<a th:href="@{'/aggiungiLibroAdAutore/'+ ${autore.id} + '/'+ ${libro.id}}"><button type="button">Aggiungi</button></a>
+	                </li>
+	            </ul>
+			</div>
+			<div><a th:href="@{'/modificaLibriDiAutore/' + ${autore.id}}"><button type="button">Fine</button></a></div>
+        </div>
+    </body>
+</html>

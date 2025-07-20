@@ -33,5 +33,8 @@ public class LibroService {
 		this.libroRepository.deleteById(id);
 	}
 	
+	public Iterable<Libro> findLibriNonInAutore(Long idAutore){
+		return this.libroRepository.findLibriNonInAutore(idAutore);
+	}
 	
 }

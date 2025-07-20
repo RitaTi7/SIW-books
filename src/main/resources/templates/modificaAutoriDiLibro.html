@@ -20,12 +20,12 @@
 					<span th:if="${autore.dataMorte !=null}" th:text="' / ' + ${#temporals.format(autore.dataMorte, 'dd-MM-yyyy')}"></span>
 					<span th:text="')'">)</span> 
 					
-					<a th:href="@{'/eliminaAutore/' + ${autore.id}}"><button type="button">Rimuovi</button></a>
+					<a th:href="@{'/rimuoviAutoreDaLibro/'+ ${libro.id} + '/' + ${autore.id}}"><button type="button">Rimuovi</button></a>
 				<!--	<a th:href="@{'/modificaAutore/' + ${autore.id}}"><button type="button">Modifica</button></a>-->
 				</li>
 			</ul>
-			<span><a th:href="@{'/aggiungiAutoriDiLibro/'+ ${libro.id}}"><button type="button">Aggiungi autore</button></a></span>
-			<div><a th:href="@{'/modificaLibro/'+ ${libro.id}}"><button type="button">Indietro</button></a></div>
+			<span><a th:href="@{'/aggiungiAltriAutoriALibro/'+ ${libro.id}}"><button type="button">Aggiungi autore</button></a></span>
+			<div><a th:href="@{'/modificaLibro/'+ ${libro.id}}"><button type="button">Fine</button></a></div>
 		</div>
 	</body>
 </html>
