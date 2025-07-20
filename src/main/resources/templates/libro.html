@@ -24,9 +24,8 @@
         <div th:unless="${libro}">Non sono presenti libri</div>
 		
 		<div>
-			<a th:href="@{/libro}">
-				<button type="button">Elenco dei libri</button>
-			</a>
+			<a th:href="@{/libro}"><button type="button">Elenco dei libri</button></a>
+			<a th:href="@{'/recensione/' + ${libro.id}}"><button type="button">Recensioni</button></a>
 		</div>
     </body>
 </html>

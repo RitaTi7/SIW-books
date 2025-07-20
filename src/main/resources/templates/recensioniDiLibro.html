@@ -1,4 +1,25 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<title>Recensioni del libro</title>
+        <link rel="stylesheet" href="/stile.css?version=2"/>
+		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
+	</head>
 	
+	<body>
+		<h1>Recensioni</h1>
+		
+		<div th:if="${recensioni}">
+			<ul>
+				<li th:each="recensione: ${recensioni}">
+					<div th:text="${recensione.titolo}">Titolo</div>
+					<span>Voto: <span th:text="${recensione.voto}">votazione</span></span>
+					<div th:text="${recensione.testo}"></div>
+				</li>
+			</ul>
+		</div>
+		<div th:if="${recensioni.isEmpty()}">Nessuna recensione</div>
+		<div><a th:href="@{'/formNuovaRecensione/' + ${libro.id}}"><button type="button">Scrivi</button></a></div>
+		<div><a th:href="@{'/libro/' + ${libro.id}}"><button type="button">Indietro</button></a></div>
+	</body>
 </html>
