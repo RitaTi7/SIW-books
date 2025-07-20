@@ -9,8 +9,8 @@
     <body>
         <div>
             <div th:if="${autore}"> <h1 th:text="|${autore.nome} ${autore.cognome}|">Nome Cognome</h1>
-		        <div>Data di nascita: <span th:if="${autore}" th:text="${autore.dataNascita}">2003</span></div>
-				<div th:if="${autore.dataMorte != null}">Data di morte: <span th:text="${autore.dataMorte}"></span></div>
+		        <div>Data di nascita: <span th:if="${autore}" th:text="${#temporals.format(autore.dataNascita, 'dd-MM-yyyy')}">2003</span></div>
+				<div th:if="${autore.dataMorte != null}">Data di morte: <span th:text="${#temporals.format(autore.dataMorte, 'dd-MM-yyyy')}"></span></div>
 				<div>Nazionalità: <span th:if="${autore.nazionalita!=null}" th:text="${autore.nazionalita}">non specificata</span>
 					<!-- non so se serve: <span th:unless="${autore.nazionalita !=null}">non specificata</span>-->
 				</div>
