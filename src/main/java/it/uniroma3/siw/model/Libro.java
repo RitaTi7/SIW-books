@@ -31,7 +31,7 @@ public class Libro {
 	@ManyToMany
 	private Set<Autore> autori;
 	
-	@OneToMany(mappedBy="Libro")
+	@OneToMany(mappedBy="libro")
 	private List<Recensione> recensioni;
 	
 	//immagini
