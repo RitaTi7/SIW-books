@@ -12,6 +12,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.PastOrPresent;
 
 @Entity
 public class Autore {
@@ -27,11 +29,14 @@ public class Autore {
 	
 	@NotNull
 	@DateTimeFormat(pattern= "yyyy-MM-dd")
-	private LocalDate dataNascita;		//TODO: la nascita non può superare la morte
+	@Past
+	private LocalDate dataNascita;		//TODO: la nascita non può superare la morte->annotazione personalizzata, controllo nel Controller...
+	
 	@DateTimeFormat(pattern= "yyyy-MM-dd")
-	private LocalDate dataMorte;		//TODO: morte può essere NULL e non può superare la data corrente
+	@PastOrPresent(message="la data non può essere futura")
+	private LocalDate dataMorte;
 	@NotBlank
-	private String nazionalita;			//deve essere scelto da un elenco??
+	private String nazionalita;			//deve essere scelto da un elenco??-> NO
 	
 	
 	@ManyToMany(mappedBy="autori")

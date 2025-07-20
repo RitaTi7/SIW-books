@@ -31,9 +31,13 @@ public class Libro {
 	@ManyToMany
 	private Set<Autore> autori;
 	
+	@OneToMany(mappedBy="Libro")
+	private List<Recensione> recensioni;
+	
 	//immagini
 	//collana
 	//genere
+	//casa editrice??
 	
 	public Long getId() {
 		return id;
@@ -51,6 +55,10 @@ public class Libro {
 		return autori;
 	}
 	
+	public List<Recensione> getRecensioni() {
+		return recensioni;
+	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -65,6 +73,10 @@ public class Libro {
 	
 	public void setAutori(Set<Autore> autori) {
 		this.autori = autori;
+	}
+	
+	public void setRecensioni(List<Recensione> recensioni) {
+		this.recensioni = recensioni;
 	}
 	
 	//TODO: bisogna inserire anche il metodo ToString

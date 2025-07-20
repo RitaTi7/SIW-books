@@ -173,7 +173,6 @@ public class AutoreController {
 		for(Libro l: this.libroService.findLibriNonInAutore(idAutore)) {
 			libri.add(l);
 		}
-		
 		return libri;
 	}
 }
