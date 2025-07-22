@@ -1,25 +1,40 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Recensioni del libro</title>
-        <link rel="stylesheet" href="/stile.css?version=2"/>
+    <head>
+        <title>Libro</title>
+        <link rel="stylesheet" th:href="@{/css/style1.css}"/>
 		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
-	</head>
-	
-	<body>
-		<h1>Recensioni</h1>
+    </head>
+
+ 	<header>
+ 	  <div><a th:href="@{/}"><button type="button">Home</button></a></div>
+ 	</header>
+    <body>
+        <div id="info">
+            <div th:if="${libro}"> <h1 th:text="${libro.titolo}">Titolo Libro</h1></div>
+            <div>Anno di pubblicazione: <span th:if="${libro}" th:text="${libro.anno}">2003</span></div>
+        <div th:unless="${libro}">Non sono presenti libri</div>
+        </div>
 		
-		<div th:if="${recensioni}">
-			<ul>
-				<li th:each="recensione: ${recensioni}">
-					<div th:text="${recensione.titolo}">Titolo</div>
-					<span>Voto: <span th:text="${recensione.voto}">votazione</span></span>
-					<div th:text="${recensione.testo}"></div>
-				</li>
-			</ul>
+		
+		<div id="pulsanti">
+			<a th:href="@{/libro}"><button type="button">Elenco dei libri</button></a>
+			<a th:href="@{'/formNuovaRecensione/' + ${libro.id}}"><button type="button">Scrivi</button></a>
 		</div>
-		<div th:if="${recensioni.isEmpty()}">Nessuna recensione</div>
-		<div><a th:href="@{'/formNuovaRecensione/' + ${libro.id}}"><button type="button">Scrivi</button></a></div>
-		<div><a th:href="@{'/libro/' + ${libro.id}}"><button type="button">Indietro</button></a></div>
-	</body>
+		
+		<div id="recensioni">
+		   <h3>Recensioni:</h3>
+		   <span th:if="${recensioni.isEmpty()}"> Non sono presenti recensioni</span>
+		   <ul th:if="${recensioni}">
+		     <li th:each="rec: ${recensioni}">
+		       <h4 th:text="${rec.titolo}">Titolo</h4>
+		       <h5>voto: <span th:text="${rec.voto}">5</span></h5>
+		       <p th:text="${rec.testo}">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+		       
+		     </li>
+		   </ul>
+		   
+		</div>  
+		  
+    </body>
 </html>

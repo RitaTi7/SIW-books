@@ -38,6 +38,7 @@ public class Libro {
 	//collana
 	//genere
 	//casa editrice??
+	//TRAMA
 	
 	public Long getId() {
 		return id;

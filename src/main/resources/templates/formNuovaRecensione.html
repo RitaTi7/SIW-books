@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>Nuova recensione</title>
-		<link rel="stylesheet" href="/stile.css?version=2"/>
+		<link rel="stylesheet" href="/css/style1.css"/>
 		<link rel="icon" href="piuma.jpg" type="/image/JPG" />	
 	</head>
 	
@@ -20,7 +20,7 @@
 			</div>
 			<div>
 				<label>Voto:</label>
-				<span><input type="integer" th:field="${recensione.voto}"></span>
+				<span><input type="number" th:field="${recensione.voto}"></span>
 				<span th:if="${#fields.hasErrors('voto')}" th:errors="*{voto}"></span>
 			</div>
 			<div>
@@ -30,7 +30,7 @@
 			</div>
 			
 			<div>
-				<span><button type="submint">Conferma</button></span>
+				<span><button type="submit">Conferma</button></span>
 				<div><a th:href="@{'/recensione/' + ${libro.id}}"></a></div>
 			</div>
 		</form>

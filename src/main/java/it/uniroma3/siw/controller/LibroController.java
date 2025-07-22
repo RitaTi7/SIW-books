@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.model.Autore;
 import it.uniroma3.siw.model.Libro;
+import it.uniroma3.siw.model.Recensione;
 import it.uniroma3.siw.service.AutoreService;
 import it.uniroma3.siw.service.LibroService;
 import jakarta.transaction.Transactional;
@@ -37,8 +38,10 @@ public class LibroController {
 		}*/
 		Libro libro=this.libroService.getLibroById(id);
 		Set<Autore> autori= libro.getAutori();
+		List<Recensione> recensioni= libro.getRecensioni();
 		model.addAttribute("libro", libro);
 		model.addAttribute("autori", autori);
+		model.addAttribute("recensioni", recensioni);
 		return "libro.html";
 	}
 	

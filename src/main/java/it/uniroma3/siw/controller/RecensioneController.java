@@ -42,9 +42,12 @@ public class RecensioneController {
 		if(bindingResult.hasErrors())
 			return "formNuovaRecensione.html";
 		else {
+			Libro libro= this.libroService.getLibroById(id);
+			recensione.setLibro(libro);		
+			libro.getRecensioni().add(recensione);
 			this.recensioneService.save(recensione);
 			model.addAttribute("recensione", recensione);
-			return "redirect:/recensione/" + id;
+			return "redirect:/recensione/" + libro.getId();
 		}
 	}
 	

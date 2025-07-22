@@ -24,7 +24,7 @@ public class Recensione {
 	@Min(1)
 	@Max(5)
 	private Integer voto;
-	private String testo;
+	private String testo;			//cambia i vincoli di colonna ( varying 255 sono pochi)
 	
 	@ManyToOne
 	private Libro libro;

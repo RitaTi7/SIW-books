@@ -2,12 +2,16 @@
 <html>
     <head>
         <title>Libri</title>
-		<link rel="stylesheet" href="/stile.css?version=2"/>
+		<link rel="stylesheet" href="/css/style1.css?version=2"/>
 		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
     </head>
+    <header>
+      <div><a th:href="@{/}"><button type="button">Home</button></a></div>
+    </header>
     <body>
-        <div>
-            <h1>Elenco dei libri</h1>
+        <div id="info">
+          <h1>Elenco dei libri</h1>
+          <div class="elenco">
             <div th:if="${libri.isEmpty()}">Non sono presenti libri</div>
             <div th:unless="${libri.isEmpty()}">
 				<ul>
@@ -15,9 +19,12 @@
 	                    <a th:href="@{'/libro'+'/'+ ${libro.id}}" th:text="|${libro.titolo} ${libro.anno}|">titolo (2003)</a>
 	                </li>
 	            </ul>
-			</div>			
-			<span><a th:href="@{/aggiornaLibri}"><button type="button">Aggiorna</button></a></span>
-			<div><a th:href="@{/}"><button type="button">Home</button></a></div>
-        </div>
+			</div>
+          </div>
+      </div>
+      <div id="pulsanti">
+        <div><a th:href="@{/aggiornaLibri}"><button type="button">Aggiorna</button></a></div>
+        
+      </div>
     </body>
 </html>
