@@ -37,8 +37,8 @@ public class RecensioneController {
 		return "formNuovaRecensione.html";
 	}
 	
-	@PostMapping("/recensione/{idLibro}")
-	public String nuovaRecensione(@Valid @ModelAttribute("recensione") Recensione recensione, @PathVariable("idLibro") Long id, BindingResult bindingResult, Model model) {
+	@PostMapping("/recensione/{idLibro}")												//l'ordine è importante!!!!
+	public String nuovaRecensione (@PathVariable("idLibro") Long id, @Valid @ModelAttribute("recensione") Recensione recensione, BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors())
 			return "formNuovaRecensione.html";
 		else {

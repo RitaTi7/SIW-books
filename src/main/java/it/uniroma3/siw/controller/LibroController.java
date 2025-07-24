@@ -18,7 +18,7 @@ import it.uniroma3.siw.model.Libro;
 import it.uniroma3.siw.model.Recensione;
 import it.uniroma3.siw.service.AutoreService;
 import it.uniroma3.siw.service.LibroService;
-import jakarta.transaction.Transactional;
+//import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @Controller
@@ -52,10 +52,10 @@ public class LibroController {
 		return "libri.html";
 	}
 	
-	@GetMapping("/")
-	public String home(Model model) {
-		return "index.html";
-	}
+//	@GetMapping("/")
+//	public String home(Model model) {
+//		return "index.html";
+//	}
 	
 	@GetMapping("/formNuovoLibro")
 	public String formNuovoLibro(Model model) {
@@ -128,7 +128,7 @@ public class LibroController {
 		return "modificaAutoriDiLibro.html";
 	}
 	
-	@Transactional
+//	@Transactional
 	@GetMapping("/rimuoviAutoreDaLibro/{idLibro}/{idAutore}")
 	public String rimuoviAutoreDaLibro(@PathVariable("idLibro") Long idLibro, @PathVariable Long idAutore, Model model) {
 		Libro libro= libroService.getLibroById(idLibro);

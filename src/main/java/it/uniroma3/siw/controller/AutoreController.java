@@ -16,7 +16,7 @@ import it.uniroma3.siw.model.Autore;
 import it.uniroma3.siw.model.Libro;
 import it.uniroma3.siw.service.AutoreService;
 import it.uniroma3.siw.service.LibroService;
-import jakarta.transaction.Transactional;
+///*import jakarta.transaction.Transactional;*/
 import jakarta.validation.Valid;
 
 @Controller
@@ -128,7 +128,7 @@ public class AutoreController {
 		return "modificaLibriDiAutore.html";
 	}
 	
-	@Transactional
+//	@Transactional
 	@GetMapping("/rimuoviLibroDaAutore/{idAutore}/{idLibro}")
 	public String rimuoviLibroDaAutore(@PathVariable("idAutore") Long idAutore, @PathVariable("idLibro") Long idLibro, Model model) {
 		Autore autore= this.autoreService.getAutoreById(idAutore);
