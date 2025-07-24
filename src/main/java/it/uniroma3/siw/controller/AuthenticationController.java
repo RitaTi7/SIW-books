@@ -31,12 +31,12 @@ public class AuthenticationController {
 	public String mostraFormDiRegistrazione(Model model) {
 		model.addAttribute("user", new User());
 		model.addAttribute("credentials", new Credentials());
-		return "formDiRegistrazione.html";
+		return "common/formDiRegistrazione.html";
 	}
 	
 	@GetMapping("/login")
 	public String mostraFormLogin(Model model) {
-		return "formDiLogin.html";
+		return "common/formDiLogin.html";
 	}
 	
 	@GetMapping("/")

@@ -17,6 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static it.uniroma3.siw.model.Credentials.ADMIN_ROLE;
+import static it.uniroma3.siw.model.Credentials.USER_ROLE;
 
 @Configuration 
 @EnableWebSecurity
@@ -50,10 +51,13 @@ public class AuthConfiguration {
 	protected SecurityFilterChain configure(final HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
 			.csrf().and().cors().disable().authorizeHttpRequests()
-			.requestMatchers(HttpMethod.GET, "/", "/index", "/register", "/css/**", "/images/**", "piuma.jpg").permitAll()
+			.requestMatchers(HttpMethod.GET, "/", "/login", "/common/**", "/register", "/css/**", "/images/**", "piuma.jpg").permitAll()
+			.requestMatchers(HttpMethod.POST, "/common/**").permitAll()
 			.requestMatchers(HttpMethod.POST, "/register", "/login").permitAll()
 			.requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
 			.requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
+			.requestMatchers(HttpMethod.GET, "/user/**").hasAnyAuthority(USER_ROLE)
+			.requestMatchers(HttpMethod.POST, "/user/**").hasAnyAuthority(USER_ROLE)
 			.anyRequest().authenticated()
 			.and().formLogin()
 			.loginPage("/login").permitAll()

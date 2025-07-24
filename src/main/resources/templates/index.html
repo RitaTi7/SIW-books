@@ -4,29 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Biblioteca Digitale - Home</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="/css/stile2.css" />
 </head>
 <body>
   <header>
     <div class="logo">📚 SIW Books</div>
     <nav>
-      <button onclick="window.location.href='lista_libri.html'">Libri</button>
-      <button onclick="window.location.href='lista_autori.html'">Autori</button>
-      <button onclick="window.location.href='login.html'">Login</button>
+      <a th:href="@{/libri}"><button>Libri</button></a>
+      <a th:href="@{/autori}"><button>Autori</button></a>
+	  <a th:href="@{/login}"><button>Login</button></a>
     </nav>
   </header>
 
-  <main>
+  <div id="main">
     <img 
       src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=900&q=80" 
       alt="Immagine Biblioteca" 
-      class="hero-image"
-    />
+      class="home-image"/>
     <p class="intro-text">
       Benvenuto nella nostra biblioteca digitale. Scopri i libri più amati, gli autori di rilievo e molto altro.
     </p>
 
-    <section class="highlight">
+    <section class="evidenza">
       <h2>Libri in evidenza</h2>
       <ul class="book-list">
         <li>
@@ -44,29 +43,24 @@
       </ul>
     </section>
 
-    <section class="highlight">
+    <section class="evidenza">
       <h2>Autori in evidenza</h2>
       <ul class="author-list">
         <li>
           <strong>Italo Calvino</strong>
-          <span>Scrittore italiano noto per la letteratura fantastica.</span>
         </li>
         <li>
           <strong>Elsa Morante</strong>
-          <span>Autrice di romanzi e poesie.</span>
         </li>
         <li>
           <strong>Leonardo Sciascia</strong>
-          <span>Scrittore e saggista siciliano.</span>
         </li>
       </ul>
     </section>
-  </main>
+  </div>
 
   <footer>
-    &copy; 2025 Biblioteca Digitale | 
-    <a href="#">Privacy</a> | 
-    <a href="#">Termini di servizio</a>
+    &copy; 2025 Siw Books
   </footer>
 </body>
 </html>

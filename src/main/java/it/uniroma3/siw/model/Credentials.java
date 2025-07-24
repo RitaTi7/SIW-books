@@ -11,7 +11,8 @@ import jakarta.validation.constraints.NotBlank;
 @Entity
 public class Credentials {
 	
-	public static final String DEFAULT_ROLE= "DEFAULT";
+	public static final String GUESS_ROLE= "GUEST";
+	public static final String USER_ROLE= "USER";
 	public static final String ADMIN_ROLE= "ADMIN";
 	
 	//conviene che i nomi dei ruoli siano: admin, user e guest (sarà di default)
