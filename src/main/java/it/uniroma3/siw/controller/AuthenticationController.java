@@ -68,6 +68,17 @@ public class AuthenticationController {
 	public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult userBindingResult, 
 			@Valid @ModelAttribute("credentials") Credentials credentials, BindingResult credBindingResult, Model model) {
 		
+/*		System.out.println("User: " + user);
+	    System.out.println("Credentials: " + credentials);
+	    System.out.println("User errors: " + userBindingResult.hasErrors());
+	    System.out.println("Credentials errors: " + credBindingResult.hasErrors());
+	    
+	    if(userBindingResult.hasErrors())
+	    	userBindingResult.getAllErrors().forEach(error -> System.out.println(error));
+	    
+	    if(credBindingResult.hasErrors())
+	    	credBindingResult.getAllErrors().forEach(error -> System.out.println(error));
+*/	    
 		if(!userBindingResult.hasErrors() && !credBindingResult.hasErrors()) {
 			this.userService.saveUser(user);
 			credentials.setUser(user);
@@ -75,8 +86,9 @@ public class AuthenticationController {
 			model.addAttribute("user", user);
 			return "registrazioneConSuccesso.html";
 		}
-		else
+		else {
 			return "formDiRegistrazione.html";
+		}
 	}
 
 }

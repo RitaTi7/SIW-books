@@ -50,17 +50,44 @@ public class User {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if(obj==null || obj.getClass()!=this.getClass())
+		if (this == obj)
+			return true;
+		if (obj == null)
 			return false;
-		
-		User u= (User) obj;
-		
-		return u.getName().equals(this.getName())&& u.getSurname().equals(this.getSurname()) && u.getEmail().equals(this.getEmail());
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (surname == null) {
+			if (other.surname != null)
+				return false;
+		} else if (!surname.equals(other.surname))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		return true;
 	}
 	
 	@Override
 	public int hashCode() {
-		return this.getClass().hashCode()+this.getName().hashCode()+this.getSurname().hashCode()+this.getEmail().hashCode();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		return result;
+	}
+	
+	@Override
+	public String toString() {
+	    return "User{name='" + name + "', surname='" + surname + "', email='" + email + "'}";
 	}
 	
 }

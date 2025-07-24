@@ -14,7 +14,7 @@
 			<span th:text="${userDetails.username}"></span>
 			<a href="/logout">Logout</a>
 		</div>
-		<div th:unless="${user}">
+		<div th:unless="${userDetails}">
 			<a href="/login">Login</a>
 		</div>
 	</header>
@@ -33,7 +33,7 @@
 				<span><input name="password" type="password" required /></span>
 			</div>
 			<div>
-				<span th:if="${param.error != null}">Username o password errati</span>
+				<span th:if="${param.error != null}" style="color: red;">Username o password errati</span>
 			</div>
 			<div>
 				<span><button type="submit">Login</button></span>

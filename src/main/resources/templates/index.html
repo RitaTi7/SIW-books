@@ -1,20 +1,72 @@
 <!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Biblioteca Digitale - Home</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">📚 SIW Books</div>
+    <nav>
+      <button onclick="window.location.href='lista_libri.html'">Libri</button>
+      <button onclick="window.location.href='lista_autori.html'">Autori</button>
+      <button onclick="window.location.href='login.html'">Login</button>
+    </nav>
+  </header>
 
-<html>
-	<head>
-		<title>Home</title>
-		<link rel="stylesheet" href="/stile.css?version=2"/>
-		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
-	</head>
-	
-	<header>
-	    <div><a th:href="@{/login}"><button type="button">Login</button></a></div>
-	</header>
-	
-	<body>
-		<h1>Questa è la home :)</h1>
-		<div>Qui potrai fare il login</div>
-		<div> <a th:href="@{/libro}">Qui potrai vedere l'elenco dei libri</a></div>
-		<div><a th:href="@{/autore}">Qui potrai vedere l'elenco degli artisti</a></div>
-	</body>
+  <main>
+    <img 
+      src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=900&q=80" 
+      alt="Immagine Biblioteca" 
+      class="hero-image"
+    />
+    <p class="intro-text">
+      Benvenuto nella nostra biblioteca digitale. Scopri i libri più amati, gli autori di rilievo e molto altro.
+    </p>
+
+    <section class="highlight">
+      <h2>Libri in evidenza</h2>
+      <ul class="book-list">
+        <li>
+          <strong>Il nome della rosa</strong>
+          <span>Umberto Eco</span>
+        </li>
+        <li>
+          <strong>Se questo è un uomo</strong>
+          <span>Primo Levi</span>
+        </li>
+        <li>
+          <strong>La coscienza di Zeno</strong>
+          <span>Italo Svevo</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="highlight">
+      <h2>Autori in evidenza</h2>
+      <ul class="author-list">
+        <li>
+          <strong>Italo Calvino</strong>
+          <span>Scrittore italiano noto per la letteratura fantastica.</span>
+        </li>
+        <li>
+          <strong>Elsa Morante</strong>
+          <span>Autrice di romanzi e poesie.</span>
+        </li>
+        <li>
+          <strong>Leonardo Sciascia</strong>
+          <span>Scrittore e saggista siciliano.</span>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Biblioteca Digitale | 
+    <a href="#">Privacy</a> | 
+    <a href="#">Termini di servizio</a>
+  </footer>
+</body>
 </html>
