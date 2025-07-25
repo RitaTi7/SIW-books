@@ -2,14 +2,20 @@
 <html>
     <head>
         <title>Libri</title>
-		<link rel="stylesheet" href="/css/style1.css?version=2"/>
+		<link rel="stylesheet" href="/css/stile2.css"/>
 		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
     </head>
     <header>
-      <div><a th:href="@{/}"><button type="button">Home</button></a></div>
+      <div class="logo">SIW Books</div>
+	  <nav>
+		<a th:href="@{/}"><button>Home</button></a>
+		<a th:href="@{/autore}"><button>Autori</button></a>
+		<a th:href="@{/login}"><button>Login</button></a>
+	  </nav>
+		
     </header>
     <body>
-        <div id="info">
+        <div class="book-list">
           <h1>Elenco dei libri</h1>
           <div class="elenco">
             <div th:if="${libri.isEmpty()}">Non sono presenti libri</div>

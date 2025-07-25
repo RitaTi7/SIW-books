@@ -42,14 +42,14 @@ public class LibroController {
 		model.addAttribute("libro", libro);
 		model.addAttribute("autori", autori);
 		model.addAttribute("recensioni", recensioni);
-		return "libro.html";
+		return "common/libro.html";
 	}
 	
 	@GetMapping("/libro")
 	public String mostraLibri(Model model) {
 		model.addAttribute("libri", this.libroService.getAllLibri());
 		
-		return "libri.html";
+		return "common/libri.html";
 	}
 	
 //	@GetMapping("/")

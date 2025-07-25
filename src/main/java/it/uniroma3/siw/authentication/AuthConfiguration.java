@@ -51,9 +51,8 @@ public class AuthConfiguration {
 	protected SecurityFilterChain configure(final HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
 			.csrf().and().cors().disable().authorizeHttpRequests()
-			.requestMatchers(HttpMethod.GET, "/", "/login", "/common/**", "/register", "/css/**", "/images/**", "piuma.jpg").permitAll()
-			.requestMatchers(HttpMethod.POST, "/common/**").permitAll()
-			.requestMatchers(HttpMethod.POST, "/register", "/login").permitAll()
+			.requestMatchers(HttpMethod.GET, "/", "/login","/register","/common/**", "/libro/**", "/autore/**" , "/css/**", "/images/**", "piuma.jpg").permitAll()
+			.requestMatchers(HttpMethod.POST, "/register", "/login", "/common/**").permitAll()
 			.requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
 			.requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority(ADMIN_ROLE)
 			.requestMatchers(HttpMethod.GET, "/user/**").hasAnyAuthority(USER_ROLE)

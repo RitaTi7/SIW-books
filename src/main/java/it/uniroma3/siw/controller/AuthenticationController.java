@@ -31,12 +31,12 @@ public class AuthenticationController {
 	public String mostraFormDiRegistrazione(Model model) {
 		model.addAttribute("user", new User());
 		model.addAttribute("credentials", new Credentials());
-		return "common/formDiRegistrazione.html";
+		return "formDiRegistrazione.html";
 	}
 	
 	@GetMapping("/login")
 	public String mostraFormLogin(Model model) {
-		return "common/formDiLogin.html";
+		return "formDiLogin.html";
 	}
 	
 	@GetMapping("/")
@@ -49,6 +49,8 @@ public class AuthenticationController {
 			Credentials credentials= this.credentialsService.getCredentials(userDetails.getUsername());
 			if(credentials.getRole().equals(Credentials.ADMIN_ROLE))
 				return "admin/indexAdmin.html";
+			else if(credentials.getRole().equals(Credentials.USER_ROLE))
+				return "user/indexUser.html";
 			else
 				return "index.html";
 		}
@@ -59,7 +61,9 @@ public class AuthenticationController {
 		UserDetails userDetails= (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credentials credentials= this.credentialsService.getCredentials(userDetails.getUsername());
 		if(credentials.getRole().equals(Credentials.ADMIN_ROLE))
-			return "indexAdmin.html";
+			return "admin/indexAdmin.html";
+		else if(credentials.getRole().equals(Credentials.USER_ROLE))
+			return "user/indexUser.html";
 		else
 			return "index.html";
 	}
