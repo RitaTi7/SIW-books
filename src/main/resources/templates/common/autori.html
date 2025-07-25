@@ -2,9 +2,20 @@
 <html>
     <head>
         <title>Autori</title>
-		<link rel="stylesheet" href="/stile.css?version=2"/>
+		<link rel="stylesheet" href="/css/stile1.css" />
+		<link rel="stylesheet" href="/css/stile.css"/>
 		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
     </head>
+	
+	<header>
+    	<div class="logo">SIW Books</div>
+	  	<nav>
+			<a th:href="@{/}"><button>Home</button></a>
+			<a th:href="@{/libro}"><button>Libri</button></a>
+			<a th:href="@{/login}"><button>Login</button></a>
+	  	</nav>
+    </header>
+		
     <body>
         <div>
             <h1>Elenco degli autori</h1>

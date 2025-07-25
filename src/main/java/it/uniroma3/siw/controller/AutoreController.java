@@ -42,13 +42,13 @@ public class AutoreController {
 		Autore autore=this.autoreService.getAutoreById(id);
 		model.addAttribute("autore", autore);
 		model.addAttribute("libri", autore.getLibri());
-		return "autore.html";
+		return "common/autore.html";
 	}
 	
 	@GetMapping("/autore")
 	public String mostraAutori(Model model) {
 		model.addAttribute("autori", this.autoreService.getAllAutori());
-		return "autori.html";
+		return "common/autori.html";
 	}
 	
 	@GetMapping("/formNuovoAutore")

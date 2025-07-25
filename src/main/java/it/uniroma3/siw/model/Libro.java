@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,34 +30,40 @@ public class Libro {
 	@Max(2025)
 	private Integer anno;
 	
+//	@NotBlank
+//	@Column(length= 500)
+//	private String trama;	//TODO
+//	
+//	@NotBlank
+//	private String genere;	//TODO
+	
 	@ManyToMany
 	private Set<Autore> autori;
 	
 	@OneToMany(mappedBy="libro", cascade={CascadeType.REMOVE})
 	private List<Recensione> recensioni;
 	
-	//immagini
-	//collana
+	//immagini			//TODO
+	//collana			//TODO
 	//genere
 	//casa editrice??
-	//TRAMA
+	
 	
 	public Long getId() {
 		return id;
 	}
-	
 	public String getTitolo() {
 		return titolo;
 	}
-	
 	public Integer getAnno() {
 		return anno;
 	}
-	
+//	public String getTrama() {
+//		return trama;
+//	}
 	public Set<Autore> getAutori() {
 		return autori;
 	}
-	
 	public List<Recensione> getRecensioni() {
 		return recensioni;
 	}
@@ -64,19 +71,18 @@ public class Libro {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
 	public void setTitolo(String titolo) {
 		this.titolo = titolo;
 	}
-	
 	public void setAnno(Integer anno) {
 		this.anno = anno;
 	}
-	
+//	public void setTrama(String trama) {
+//		this.trama = trama;
+//	}
 	public void setAutori(Set<Autore> autori) {
 		this.autori = autori;
 	}
-	
 	public void setRecensioni(List<Recensione> recensioni) {
 		this.recensioni = recensioni;
 	}
