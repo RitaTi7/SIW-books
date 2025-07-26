@@ -12,6 +12,7 @@
 	<header>
 		<div class="logo"><a href="/"><img src="/images/piuma.jpg" width="2%"/></a> SIW Books</div>
 		<nav>
+			<a th:href="@{/}"><button>Home</button></a>
 			<span th:if="${userDetails}">
 				<span th:text="${userDetails.username}"></span>
 				<a th:href="@{/logout}"><button>Logout</button></a>

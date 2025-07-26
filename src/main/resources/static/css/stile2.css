@@ -90,7 +90,7 @@ ul.book-list li strong, ul.author-list li strong {	/*solo in index.html*/
   display: block;
 }
 
-.container {		/*lista di libri: libri.html*/
+.container {		/*lista di libri: libri.html, aggiornalibri*/
     width: 600px;
     margin: 30px auto;
     background-color: rgb(210, 180, 140, 0.7);
@@ -98,6 +98,7 @@ ul.book-list li strong, ul.author-list li strong {	/*solo in index.html*/
     box-shadow: 0 2px 8px rgba(110, 71, 23, 0.12);
     padding: 30px 20px;
 	flex:1;
+	position:relative;
 }
 
 .container-obj {	/*libro.html*/	

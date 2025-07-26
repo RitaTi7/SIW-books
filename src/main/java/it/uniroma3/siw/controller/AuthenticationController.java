@@ -60,9 +60,20 @@ public class AuthenticationController {
 	public String defaultDopoLogin(Model model) {
 		UserDetails userDetails= (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Credentials credentials= this.credentialsService.getCredentials(userDetails.getUsername());
-		if(credentials.getRole().equals(Credentials.ADMIN_ROLE))
-			return "admin/indexAdmin.html";
-		else if(credentials.getRole().equals(Credentials.USER_ROLE))
+		
+/*		System.out.println("Ruolo dell'utente loggato: " + credentials.getRole());
+		
+		System.out.println("Ruolo effettivo nel DB: '" + credentials.getRole() + "'");
+		System.out.println("Costante ADMIN_ROLE: '" + Credentials.ADMIN_ROLE + "'");
+		System.out.println("Match? " + credentials.getRole().equals(Credentials.ADMIN_ROLE));
+		System.out.println("Costante ADMIN_ROLE: '" + Credentials.USER_ROLE + "'");
+		System.out.println("Match? " + credentials.getRole().equals(Credentials.USER_ROLE));
+*/		
+		if(credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+		//	System.out.println("ciao");
+			return "admin/indexAdmin";
+		}
+		if(credentials.getRole().equals(Credentials.USER_ROLE))
 			return "user/indexUser.html";
 		else
 			return "index.html";

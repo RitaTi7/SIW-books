@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,33 +53,30 @@ public class LibroController {
 		return "common/libri.html";
 	}
 	
-//	@GetMapping("/")
-//	public String home(Model model) {
-//		return "index.html";
-//	}
 	
-	@GetMapping("/formNuovoLibro")
+	
+	@GetMapping("/admin/formNuovoLibro")
 	public String formNuovoLibro(Model model) {
 		model.addAttribute("libro", new Libro());
-		return "formNuovoLibro.html";
+		return "admin/formNuovoLibro.html";
 	}
 	
-	@PostMapping("/libro")
+	@PostMapping("/admin/libro")
 	public String nuovoLibro(@Valid @ModelAttribute("libro") Libro libro, BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors()) {
-			return "formNuovoLibro";
+			return "admin/formNuovoLibro";
 		}
 		else {
 			this.libroService.save(libro);
 			model.addAttribute("libro", libro);
-			return "redirect:libro/" + libro.getId();
+			return "redirect:/libro/" + libro.getId();
 		}
 	}
 	
-	@GetMapping("/aggiornaLibri")
+	@GetMapping("/admin/aggiornaLibri")
 	public String aggiornaLibri(Model model) {
 		model.addAttribute("libri", this.libroService.getAllLibri());
-		return "aggiornaLibri.html";
+		return "admin/aggiornaLibri.html";
 	}
 	
 	@GetMapping("/eliminaLibro/{id}")
@@ -103,6 +101,7 @@ public class LibroController {
 		return "formModificaLibro.html";
 	}
 	
+	//@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/modificaLibro/{id}")
 	public String modificaLibro(@PathVariable("id") Long id, @Valid @ModelAttribute("libro") Libro libroModificato, BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors())
