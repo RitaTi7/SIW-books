@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
         <title>Libri</title>
 		<link rel="stylesheet" href="/css/stile1.css" />
@@ -39,6 +40,9 @@
 	            </ul>
 			</div>
           </div>
+		  <div class="operazioni" sec:authorize="hasRole('ADMIN')">
+			  <span><a th:href="@{/admin/aggiornaLibri}"><button type="button">Aggiorna</button></a></span>
+		  </div>		  
       </div>
 	  
 	  <footer>
@@ -46,3 +50,4 @@
 	  </footer>
 	</body>
 </html>
+>

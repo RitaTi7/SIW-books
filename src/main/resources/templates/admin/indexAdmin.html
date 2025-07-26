@@ -12,7 +12,7 @@
 	<div class="logo"><img src="/images/piuma.jpg" width="2%"/> SIW Books</div>
     <nav>
 	  <a th:href="@{/}"><button>Home</button></a>
-      <a th:href="@{/admin/libro}"><button>Libri</button></a>
+      <a th:href="@{/libro}"><button>Libri</button></a>
       <a th:href="@{/autore}"><button>Autori</button></a>
 	  <span th:if="${userDetails}">
 	  	<span th:text="${userDetails.username}"></span>
