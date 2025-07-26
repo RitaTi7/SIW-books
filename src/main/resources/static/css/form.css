@@ -1,0 +1,71 @@
+form {
+  background-color: rgba(255, 246, 234, 0.9); /* beige chiaro trasparente */
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(110, 71, 23, 0.1);
+  max-width: 600px;
+  margin: 40px auto;
+  font-family: var(--font-family);
+}
+
+form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+
+form input,
+form textarea,
+form select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #c5a17d;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: var(--font-family);
+  background-color: #fffaf4;
+  color: var(--color-text);
+  margin-bottom: 20px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+  border-color: var(--color-link-hover);
+  box-shadow: 0 0 5px rgba(140, 109, 86, 0.3);
+  outline: none;
+}
+
+form button,
+form input[type="submit"] {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: var(--font-family);
+  margin: 0 20px;
+ 
+}
+
+form button:hover,
+form input[type="submit"]:hover {
+  background-color: var(--color-link-hover);
+}
+
+form h1 {
+  text-align: center;
+  color: var(--color-primary-dark); /* tono scuro marrone */
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  margin-top: 10px;
+  font-family: var(--font-family);
+}
