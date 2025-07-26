@@ -33,7 +33,8 @@ public class CredentialsService {
 	
 	@Transactional
 	public Credentials saveCredentials(Credentials credentials) {
-		credentials.setRole(Credentials.GUESS_ROLE);
+		if(credentials.getRole()==null)
+			credentials.setRole(Credentials.GUESS_ROLE);
 		credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
 		return this.credentialsRepository.save(credentials);
 	}

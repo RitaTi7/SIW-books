@@ -1,2 +1,2 @@
-INSERT INTO libro(titolo, anno) VALUES ('ciao', 2013);
-INSERT INTO autore(nome, cognome, data_nascita) VALUES ('Rita', 'Tiani', '2003-12-08');
+INSERT INTO users(id, name, surname, email) VALUES (1, 'Rita', 'Tiani', 'rita@gmail.com');
+INSERT INTO credentials(id, username, password, role) VALUES (1, 'admin', '$2a$12$9tpLJAnbL.jvjNuO7jLKh./DftjSK57czenu9MpMkwTytDEdoG.rS', 'ADMIN_ROLE');
