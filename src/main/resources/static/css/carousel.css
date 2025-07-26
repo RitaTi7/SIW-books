@@ -7,6 +7,7 @@
   border-radius: 10px;
   margin:auto;
   position:relative;
+  line-height: 0;
 }
 .carousel-container input[type="radio"] {
   display: none;
@@ -17,6 +18,9 @@
   height: 100%;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
+  display: block;
+  margin:0;
+    padding:0;
 }
 .carousel-slide img {
   width: 100%;

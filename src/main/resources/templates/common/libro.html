@@ -19,15 +19,13 @@
 					<a th:href="@{/login}"><button>Login</button></a>
 				</nav>
  			</header>
-
-			
 		
 			<div style="display: flex; flex:1;">
 		    	<div class="container-obj" th:if="${libro}">
 		        	<h1 th:text="${libro.titolo}">Titolo Libro</h1>
 		        	<p class="importante">Anno di pubblicazione: <span th:text="${libro.anno}">2003</span></p>
 					<p class="importante">Autori:</p>
-					<div class="autore">
+					<div class="cliccabile">
 				  		<span th:if="${autori.isEmpty()}">Non è riscontrabile nessun autore</span>
 				  		<span th:unless="${autori.isEmpty()}">
 							<ul >

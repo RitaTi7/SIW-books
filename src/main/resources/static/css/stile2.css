@@ -2,7 +2,8 @@
 :root {
   --color-bg: #f5f0e6;               /* beige chiaro */
   --color-text: #4b3b2b;             /* marrone scuro */
-  --color-primary: #8c6d56;          /* marrone medio */
+  --color-primary:#33251E;          /* marrone medio */
+ /* --color-primary: #8c6d56;          /* marrone medio */
   --color-primary-dark: #6e553f;     /* marrone più scuro */
   --color-link: #a27c5a;             /* marrone chiaro */
   --color-link-hover: #7b5e3c;       /* marrone tono più scuro */
@@ -20,12 +21,15 @@ a:hover{
 }
 
 #main {		/*solo in index.html*/
-  max-width: 900px;
+  max-width: 1000px;
   margin: 40px auto;
-  padding: 0 20px;
+  padding: 40px 60px;
   text-align: center;
   flex: 1;
-  
+  background-color:  rgba(250, 235, 215, 0.8); /*antiquewhite*/
+  border-radius: 20px;
+
+   
 }
 
 .home-image {	/*solo in index.html*/
@@ -34,6 +38,7 @@ a:hover{
   object-fit: cover;
   border-radius: 12px;
   box-shadow: 0 6px 15px rgba(140, 109, 86, 0.4);
+  margin-top: 20px;
 }
 
 .intro-text {	/*solo in index.html*/
@@ -88,7 +93,7 @@ ul.book-list li strong, ul.author-list li strong {	/*solo in index.html*/
 .container {		/*lista di libri: libri.html*/
     width: 600px;
     margin: 30px auto;
-    background-color: #fff6ea;
+    background-color: rgb(210, 180, 140, 0.7);
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(110, 71, 23, 0.12);
     padding: 30px 20px;
@@ -101,10 +106,11 @@ ul.book-list li strong, ul.author-list li strong {	/*solo in index.html*/
 	margin-left: 40px;
 	margin-top: 40px;
 	max-width: 700px;
-	background-color: #fff6ea;
+	background-color:rgb(255, 246, 234, 0.9);
 	border-radius: 10px;
 	box-shadow: 0 2px 8px rgba(110, 71, 23, 0.12);
 	padding: 20px 40px;
+	margin-bottom: 66px;
 }
 
 ul.elem {		/*libri.html*/
@@ -133,34 +139,34 @@ ul.elem li:hover {		/*libri.html*/
 }
 
 
-.autore {		/*libri.html*/
+.cliccabile {		/*libri.html, autori.html*/
     color: var(--color-link);
     font-style: italic;
     margin-bottom: 3px;
     display: block;
 }
 
-.autore :hover{ /*libri.html*/
+.cliccabile :hover{ /*libri.html*/
 	color: var(--color-hover);
 }
 
 
 
-.importante {		/*libri.html-> però è solo un po' più in grassetto!*/
+.importante {		/*libri.html, autori..-> però è solo un po' più in grassetto!*/
     font-weight: 600;
     color: #7c5c3b;
     margin-bottom: 15px;
 }
 
 .recensioni {		/*libri.html*/
-    border: 2px solid #7c5c3b;
-    background-color: #f3e9d7;
+  /*  border: 2px solid #7c5c3b;*/
+    background-color: rgb(243, 233, 215, 0.9);
     padding: 20px 40px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(124, 92, 59, 0.2);
     max-width: 93%; /* aumentata larghezza massima */
     /*margin: auto; /* centra il riquadro nelle sue dimensioni */
-	margin-top: 60px;
+	/*margin-top: 60px;*/
 	margin-left: 40px;
 	margin-right: 40px;
 	flex:1;
@@ -195,6 +201,32 @@ ul.elem li:hover {		/*libri.html*/
 .recensioni-riquadro ul li:hover {
     background-color: #cbb694;
     cursor: default;
+}
+
+.foto{
+	margin-top: 150px;
+	border-radius: 10px;
+	align-items: center;
+	position:relative;
+	line-height: 0;
+	border: solid;
+	/*flex:1;*/	
+	overflow: hidden;
+	margin-left:200px;
+	margin-right:100px;
+	display:flex;
+	width:400px;
+	height: 600px;
+	margin-bottom: 66px;
+}
+
+.foto img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 10px;
+	display:block;
+	
 }
 
 

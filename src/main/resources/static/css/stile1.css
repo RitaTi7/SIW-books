@@ -2,7 +2,8 @@
 :root {
   --color-bg: #f5f0e6;               /* beige chiaro */
   --color-text: #4b3b2b;             /* marrone scuro */
-  --color-primary: #8c6d56;          /* marrone medio */
+ /* --color-primary0: #8c6d56;          /* marrone medio */
+  --color-primary:#33251E;          /* marrone medio */
   --color-primary-dark: #6e553f;     /* marrone più scuro */
   --color-link: #a27c5a;             /* marrone chiaro */
   --color-link-hover: #7b5e3c;       /* marrone tono più scuro */
@@ -17,7 +18,12 @@ html, body{
 	margin:0;
 	padding: 0;
 	height: 100%;
+	background-image: url('/images/background.jpg');
+	background-size: cover;
+	background-repeat: repeat-y;
+	background-position: center;
 }
+
 body {
   font-family: var(--font-family);
   margin: 0;
@@ -61,7 +67,7 @@ nav button {
 }
 
 nav button:hover {
-  color: var(--color-primary-dark);
+  color: var(--color-link-hover);
 }
 
 
