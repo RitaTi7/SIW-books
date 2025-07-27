@@ -32,7 +32,11 @@
             <div th:unless="${libri.isEmpty()}">
 				<ul class="elem">
 	                <li th:each="libro: ${libri}">
-	                    <span class="titolo"><a th:href="@{'/libro'+'/'+ ${libro.id}}" th:text="${libro.titolo} + ' (' + ${libro.anno} + ')'">titolo (2003)</a></span><br>
+	                    <span class="titolo" th:text="${libro.titolo} + ' (' + ${libro.anno} + ')'">titolo (2003)</span>
+						<span class="settings2" sec:authorize="hasAuthority('ADMIN')">
+							<a th:href="@{'/admin/eliminaLibro/' + ${libro.id}}"><button type="button">Rimuovi</button></a>
+							<a th:href="@{'/libro/' + ${libro.id}}"><button type="button">Modifica</button></a>
+						</span><br>						
 						<span class="autore" th:if="${libro.autori}" th:each="autore, iterStat : ${libro.autori}">
 							<span th:text="|${autore.nome} ${autore.cognome}|"></span><span th:if="${!iterStat.last}">, </span>
 						</span>
@@ -40,8 +44,8 @@
 	            </ul>
 			</div>
           </div>
-		  <div class="operazioni">
-			<span><a th:href="@{/}"><button type="button">Fine</button></a></span>
+		  <div class="settings1"  sec:authorize="hasAuthority('ADMIN')">
+			<span><a th:href="@{/libro}"><button type="button">Fine</button></a></span>
 			<span><a th:href="@{/admin/formNuovoLibro}"><button type="button">Nuovo libro</button></a></span>
 		  </div>
 	  </div>

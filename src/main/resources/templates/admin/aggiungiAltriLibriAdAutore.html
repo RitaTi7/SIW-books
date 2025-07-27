@@ -1,12 +1,67 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Libri non dell'autore</title>
-		<link rel="stylesheet" href="/stile.css?version=2"/>
-		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
+		<link rel="stylesheet" href="/css/stile1.css" />
+		<link rel="stylesheet" href="/css/stile2.css"/>
+		<link rel="stylesheet" href="/css/stile3.css"/>		
+		<link rel="icon" href="/images/piuma.jpg" type="/image/JPG" />
     </head>
     <body>
-        <div>
+		<header>
+			<div class="logo"><img src="/images/piuma.jpg" width="2%"/> SIW Books</div>
+			<nav>
+				<a th:href="@{/}"><button>Home</button></a>
+				<a th:href="@{/libro}"><button>Libri</button></a>
+				<a th:href="@{/autore}"><button>Autori</button></a>
+				<span th:if="${userDetails}">
+					<span th:text="${userDetails.username}"></span>
+					<a th:href="@{/logout}"><button>Logout</button></a>
+				</span>
+				<span th:unless="${userDetails}">
+					<a th:href="@{/login}"><button>Login</button></a>
+				</span>
+			</nav>
+		</header>
+		
+		<div style="display: flex; flex:1;">
+			<div class="container-obj" th:if="${autore}">
+		    	<h1 th:text="|${autore.nome} ${autore.cognome}">Nome Cognome</h1>
+				<!--<div class="settings3" sec:authorize="hasAuthority('ADMIN')">
+					<a th:href="@{'/admin/formModificaAutore/' + ${autore.id}}"><button type="button">Modifica dati</button></a><br>
+					<span><a th:href="@{'/admin/modificaLibriDiAutore/' + ${autore.id}}" style="margin-top:10px;"><button type="button">Modifica libri</button></a></span>
+				</div>-->
+		
+				<p class="importante">Libri non dell'autore:</p>
+				<div class="cliccabile">
+			  		<span th:if="${libri.isEmpty()}">Non è presente nessun libro</span>
+			  		<span th:unless="${libri.isEmpty()}">
+						<ul>
+							<li th:each="libro: ${libri}">
+								<a th:href="@{'/libro/' + ${libro.id}}" th:text="${libro.titolo} + ' (' + ${libro.anno} + ')'">Titolo (2003)</a>
+								<span class="settings2" style="margin-left: 40px;"><a th:href="@{'/admin/aggiungiLibroAdAutore/'+ ${autore.id} + '/' + ${libro.id}}"><button type="button">Aggiungi</button></a></span>								
+							</li>
+						</ul>
+			  		</span>
+				</div>
+				<span class="settings1">
+					<a th:href="@{'/autore/' + ${autore.id}}"><button type="button">Fine</button></a>
+				</span>
+			</div>
+			<div class="foto">
+				<img src="https://www.altrasoluzione.com/images/blog/siti-per-scaricare-immagini-gratis-legalmente/immagini-gratis-big.jpg"/>
+			</div>
+		</div>	
+		
+
+		<footer>
+			&copy; 2025 Siw Books
+		</footer>		
+
+    </body>
+</html>
+
+
+<!---        <div>
             <h1>Elenco dei libri non scritti dall'autore</h1>
             <div th:if="${libri.isEmpty()}">Non sono presenti libri</div>
             <div th:unless="${libri.isEmpty()}">
@@ -18,6 +73,4 @@
 	            </ul>
 			</div>
 			<div><a th:href="@{'/modificaLibriDiAutore/' + ${autore.id}}"><button type="button">Fine</button></a></div>
-        </div>
-    </body>
-</html>
+        </div>-->

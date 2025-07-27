@@ -6,6 +6,10 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,9 +54,14 @@ public class LibroController {
 	public String mostraLibri(Model model) {
 		model.addAttribute("libri", this.libroService.getAllLibri());
 		
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		if (auth != null && !(auth instanceof AnonymousAuthenticationToken)) {
+//			UserDetails userDetails = (UserDetails) auth.getPrincipal();
+//			model.addAttribute("userDetails", userDetails);
+//		}
+		
 		return "common/libri.html";
 	}
-	
 	
 	
 	@GetMapping("/admin/formNuovoLibro")
@@ -79,44 +88,44 @@ public class LibroController {
 		return "admin/aggiornaLibri.html";
 	}
 	
-	@GetMapping("/eliminaLibro/{id}")
+	@GetMapping("/admin/eliminaLibro/{id}")
 	public String eliminaLibro(@PathVariable ("id") Long id, Model model) {		//TODO: guarda eliminaAutore-> valuta se adottare la stessa soluzione
 		this.libroService.deleteLibroById(id);									//funziona grazie al mappedBy in autore (l'owner della tabella di join è Libro (libro_autori)
 		model.addAttribute("libri", this.libroService.getAllLibri());
-		return "aggiornaLibri.html";
+		return "admin/aggiornaLibri.html";
 	}
 	
-	@GetMapping("/modificaLibro/{id}")
-	public String modificaLibro(@PathVariable("id") Long id, Model model) {
-		Libro libro=this.libroService.getLibroById(id);
-		model.addAttribute("libro", libro);
-		model.addAttribute("autori", libro.getAutori());
-		
-		return "modificaLibro.html";
-	}
+//	@GetMapping("/admin/modificaLibro/{id}")
+//	public String modificaLibro(@PathVariable("id") Long id, Model model) {
+//		Libro libro=this.libroService.getLibroById(id);
+//		model.addAttribute("libro", libro);
+//		model.addAttribute("autori", libro.getAutori());
+//		
+//		return "admin/modificaLibro.html";
+//	}
 	
-	@GetMapping("/formModificaLibro/{id}")
+	@GetMapping("/admin/formModificaLibro/{id}")
 	public String formModificaLibro(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("libro", this.libroService.getLibroById(id));
-		return "formModificaLibro.html";
+		return "admin/formModificaLibro.html";
 	}
 	
 	//@PreAuthorize("hasRole('ADMIN')")
-	@PostMapping("/modificaLibro/{id}")
+	@PostMapping("/admin/modificaLibro/{id}")
 	public String modificaLibro(@PathVariable("id") Long id, @Valid @ModelAttribute("libro") Libro libroModificato, BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors())
-			return "formModificaLibro.html";
+			return "admin/formModificaLibro.html";
 		else {
 			Libro libroEsistente= this.libroService.getLibroById(id);
 			libroEsistente.setTitolo(libroModificato.getTitolo());
 			libroEsistente.setAnno(libroModificato.getAnno());
 			this.libroService.save(libroEsistente);
 			model.addAttribute("libri", this.libroService.getAllLibri());
-			return "aggiornaLibri.html";
+			return "admin/aggiornaLibri.html";
 		}
 	}
 	
-	@GetMapping("/modificaAutoriDiLibro/{id}")
+	@GetMapping("/admin/modificaAutoriDiLibro/{id}")
 	public String modificaAutoriDiLibro(@PathVariable("id") Long id, Model model) {
 		Libro libro= this.libroService.getLibroById(id);
 		Set<Autore> autori= libro.getAutori();
@@ -124,11 +133,11 @@ public class LibroController {
 		model.addAttribute("libro", libro);
 		model.addAttribute("autori", autori);
 		
-		return "modificaAutoriDiLibro.html";
+		return "admin/modificaAutoriDiLibro.html";
 	}
 	
 //	@Transactional
-	@GetMapping("/rimuoviAutoreDaLibro/{idLibro}/{idAutore}")
+	@GetMapping("/admin/rimuoviAutoreDaLibro/{idLibro}/{idAutore}")
 	public String rimuoviAutoreDaLibro(@PathVariable("idLibro") Long idLibro, @PathVariable Long idAutore, Model model) {
 		Libro libro= libroService.getLibroById(idLibro);
 		Autore autore= autoreService.getAutoreById(idAutore);
@@ -145,17 +154,17 @@ public class LibroController {
 //		model.addAttribute("autori", this.autoriDaAggiungere(idLibro));
 		
 		
-		return "redirect:/modificaAutoriDiLibro/"+ libro.getId();
+		return "redirect:/admin/modificaAutoriDiLibro/"+ libro.getId();
 	}
 	
-	@GetMapping("/aggiungiAltriAutoriALibro/{id}")
+	@GetMapping("/admin/aggiungiAltriAutoriALibro/{id}")
 	public String aggiungiAltriAutoriALibro(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("libro", this.libroService.getLibroById(id));
 		model.addAttribute("autori", this.autoriDaAggiungere(id));
-		return "aggiungiAltriAutoriALibro.html";
+		return "admin/aggiungiAltriAutoriALibro.html";
 	}
 	
-	@GetMapping("/aggiungiAutoreALibro/{idLibro}/{idAutore}")
+	@GetMapping("/admin/aggiungiAutoreALibro/{idLibro}/{idAutore}")
 	public String aggiungiAutoreALibro(@PathVariable("idLibro") Long idLibro, @PathVariable("idAutore") Long idAutore, Model model) {
 		Libro libro= this.libroService.getLibroById(idLibro);
 		Autore autore= this.autoreService.getAutoreById(idAutore);
@@ -168,7 +177,7 @@ public class LibroController {
 		model.addAttribute("libro", libro);
 		model.addAttribute("autori", this.autoriDaAggiungere(idLibro));
 		
-		return "redirect:/aggiungiAltriAutoriALibro/" + libro.getId();
+		return "redirect:/admin/aggiungiAltriAutoriALibro/" + libro.getId();
 	}
 	
 

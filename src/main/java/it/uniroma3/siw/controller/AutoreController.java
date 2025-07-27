@@ -32,13 +32,6 @@ public class AutoreController {
 	
 	@GetMapping("/autore/{id}")
 	public String mostraAutore(@PathVariable("id") Long id, Model model) {
-//		Autore autore= this.autoreService.getAutoreById(id);
-//		if(autore==null)
-//			return "errore.html";
-//		else {
-//			model.addAttribute("autore", autore);
-//			return "autore.html";
-//		}
 		Autore autore=this.autoreService.getAutoreById(id);
 		model.addAttribute("autore", autore);
 		model.addAttribute("libri", autore.getLibri());
@@ -51,31 +44,31 @@ public class AutoreController {
 		return "common/autori.html";
 	}
 	
-	@GetMapping("/formNuovoAutore")
+	@GetMapping("/admin/formNuovoAutore")
 	public String formNuovoAutore(Model model) {
 		model.addAttribute("autore", new Autore());
-		return "formNuovoAutore.html";
+		return "admin/formNuovoAutore.html";
 	}
 	
-	@PostMapping("/autore")
+	@PostMapping("/admin/autore")
 	public String nuovoAutore(@Valid @ModelAttribute("autore") Autore autore, BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors()) {
-			return "formNuovoAutore.html";
+			return "admin/formNuovoAutore.html";
 		}
 		else {
 			this.autoreService.save(autore);
 			model.addAttribute("autore", autore);
-			return "redirect:autore/" + autore.getId();
+			return "redirect:/autore/" + autore.getId();
 		}
 	}
 	
-	@GetMapping("/aggiornaAutori")
+	@GetMapping("/admin/aggiornaAutori")
 	public String aggiornaAutori(Model model) {
 		model.addAttribute("autori", this.autoreService.getAllAutori());
-		return "aggiornaAutori.html";
+		return "admin/aggiornaAutori.html";
 	}
 	
-	@GetMapping("/eliminaAutore/{id}")
+	@GetMapping("/admin/eliminaAutore/{id}")
 	public String eliminaAutore(@PathVariable("id") Long id, Model model) {
 		Autore autore= this.autoreService.getAutoreById(id);
 		for(Libro libro: autore.getLibri()) {
@@ -84,27 +77,27 @@ public class AutoreController {
 		}
 		this.autoreService.deleteAutoreById(id);
 		model.addAttribute("autori", this.autoreService.getAllAutori());
-		return "aggiornaAutori.html";
+		return "admin/aggiornaAutori.html";
 	}
 	
-	@GetMapping("/modificaAutore/{id}")
-	public String modificaAutore(@PathVariable("id") Long id, Model model) {
-		Autore autore= this.autoreService.getAutoreById(id);
-		model.addAttribute("autore", autore);
-		model.addAttribute("libri", autore.getLibri());
-		return "modificaAutore.html";
-	}
+//	@GetMapping("/modificaAutore/{id}")
+//	public String modificaAutore(@PathVariable("id") Long id, Model model) {
+//		Autore autore= this.autoreService.getAutoreById(id);
+//		model.addAttribute("autore", autore);
+//		model.addAttribute("libri", autore.getLibri());
+//		return "modificaAutore.html";
+//	}
 	
-	@GetMapping("/formModificaAutore/{id}")
+	@GetMapping("/admin/formModificaAutore/{id}")
 	public String formModificaAutore(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("autore", this.autoreService.getAutoreById(id));
-		return "formModificaAutore.html";
+		return "admin/formModificaAutore.html";
 	}
 	
-	@PostMapping("/modificaAutore/{id}")
+	@PostMapping("/admin/modificaAutore/{id}")
 	public String modificaAutore(@PathVariable("id") Long id, @Valid @ModelAttribute("autore") Autore autoreModificato, BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors())
-			return "formModificaAutore.html";
+			return "admin/formModificaAutore.html";
 		else {
 			Autore autoreEsistente= this.autoreService.getAutoreById(id);
 			autoreEsistente.setNome(autoreModificato.getNome());
@@ -114,22 +107,22 @@ public class AutoreController {
 			autoreEsistente.setNazionalita(autoreModificato.getNazionalita());
 			this.autoreService.save(autoreEsistente);
 			model.addAttribute("autori", this.autoreService.getAllAutori());
-			return "aggiornaAutori.html";
+			return "admin/aggiornaAutori.html";
 		}
 	}
 	
-	@GetMapping("/modificaLibriDiAutore/{id}")
+	@GetMapping("/admin/modificaLibriDiAutore/{id}")
 	public String modificaLibriDiAutore(@PathVariable("id") Long id, Model model) {
 		Autore autore= this.autoreService.getAutoreById(id);
 		
 		model.addAttribute("autore", autore);
 		model.addAttribute("libri", autore.getLibri());
 		
-		return "modificaLibriDiAutore.html";
+		return "admin/modificaLibriDiAutore.html";
 	}
 	
 //	@Transactional
-	@GetMapping("/rimuoviLibroDaAutore/{idAutore}/{idLibro}")
+	@GetMapping("/admin/rimuoviLibroDaAutore/{idAutore}/{idLibro}")
 	public String rimuoviLibroDaAutore(@PathVariable("idAutore") Long idAutore, @PathVariable("idLibro") Long idLibro, Model model) {
 		Autore autore= this.autoreService.getAutoreById(idAutore);
 		Libro libro= this.libroService.getLibroById(idLibro);
@@ -140,17 +133,17 @@ public class AutoreController {
 		this.autoreService.save(autore);
 		this.libroService.save(libro);
 		
-		return "redirect:/modificaLibriDiAutore/" + autore.getId();
+		return "redirect:/admin/modificaLibriDiAutore/" + autore.getId();
 	}
 	
-	@GetMapping("/aggiungiAltriLibriAdAutore/{id}")
+	@GetMapping("/admin/aggiungiAltriLibriAdAutore/{id}")
 	public String aggiungiAltriLibriAdAutore(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("autore", this.autoreService.getAutoreById(id));
 		model.addAttribute("libri", this.libriDaAggiungere(id));
-		return "aggiungiAltriLibriAdAutore.html";
+		return "admin/aggiungiAltriLibriAdAutore.html";
 	}
 	
-	@GetMapping("/aggiungiLibroAdAutore/{idAutore}/{idLibro}")
+	@GetMapping("/admin/aggiungiLibroAdAutore/{idAutore}/{idLibro}")
 	public String aggiungiLibroAdAutore(@PathVariable("idAutore") Long idAutore, @PathVariable("idLibro") Long idLibro, Model model) {
 		Autore autore= this.autoreService.getAutoreById(idAutore);
 		Libro libro= this.libroService.getLibroById(idLibro);
@@ -164,7 +157,7 @@ public class AutoreController {
 		model.addAttribute("autore", autore);
 		model.addAttribute("libri", this.libriDaAggiungere(idAutore));
 		
-		return "redirect:/aggiungiAltriLibriAdAutore/" + autore.getId();
+		return "redirect:/admin/aggiungiAltriLibriAdAutore/" + autore.getId();
 	}
 	
 	private List<Libro> libriDaAggiungere(Long idAutore){

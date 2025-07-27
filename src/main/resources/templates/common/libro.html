@@ -4,6 +4,7 @@
         <title>Libro</title>
 		<link rel="stylesheet" href="/css/stile1.css" />
 		<link rel="stylesheet" href="/css/stile2.css" />
+		<link rel="stylesheet" href="/css/stile3.css"/>
 		<link rel="stylesheet" href="/css/carousel.css">
 		<link rel="icon" href="piuma.jpg" type="/image/JPG" />
     </head>
@@ -29,6 +30,11 @@
 			<div style="display: flex; flex:1;">
 		    	<div class="container-obj" th:if="${libro}">
 		        	<h1 th:text="${libro.titolo}">Titolo Libro</h1>
+					<div class="settings3" sec:authorize="hasAuthority('ADMIN')">
+						<a th:href="@{'/admin/formModificaLibro/' + ${libro.id}}"><button type="button">Modifica dati</button></a><br>
+						<span><a th:href="@{'/admin/modificaAutoriDiLibro/' + ${libro.id}}"><button type="button">Modifica autori</button></a></span><br>
+						<span ><a th:href="@{/admin/aggiornaLibri}"><button type="button">Fine</button></a></span>
+					</div>
 		        	<p class="importante">Anno di pubblicazione: <span th:text="${libro.anno}">2003</span></p>
 					<p class="importante">Autori:</p>
 					<div class="cliccabile">
@@ -41,7 +47,7 @@
 							</ul>
 				  		</span>
 					</div>
-					<p class="importante">Trama:</p>
+					<p class="importante" style="margin-top:40px;">Trama:</p>
 					<div class="testo">
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum

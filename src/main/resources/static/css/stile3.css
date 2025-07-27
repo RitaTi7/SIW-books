@@ -1,11 +1,11 @@
- .container .operazioni{
-/*    margin-top: 30px;*/
-    text-align: center;
+ .settings1{
+	margin-top: 30px;
+    text-align: left;
 	position:absolute;
-	bottom:20px;
+	bottom:30px;
 }
 
-.operazioni button {
+.settings1 button, .settings2 button, .settings3 button {
     padding: 10px 20px;
     margin: 0 10px;
     border-radius: 5px;
@@ -16,6 +16,17 @@
     font-weight: bold;
 }
 
-.operazioni button:hover {
+.settings1 button:hover, .settings2 button:hover, .settings3 button:hover {
     background-color: #a26a3f;
+}
+
+.settings2{
+	margin-left: 10px;
+}
+
+.settings3{
+	float: right;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
 }

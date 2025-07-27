@@ -22,7 +22,7 @@
 			</ul>
 		<div>
 			<a th:href="@{'/formModificaLibro/' + ${libro.id}}"><button type="button">Modifica dati</button></a>
-			<a th:href="@{'/modificaAutoriDiLibro/' + ${libro.id}}"><button type="button">Modifica autori</button></a>
+			<a th:href="@{'/libro' + ${libro.id}}"><button type="button">Modifica autori</button></a>
 		</div>
 		<div><a th:href="@{/aggiornaLibri}"><button type="button">Indietro</button></a></div>
 	</body>

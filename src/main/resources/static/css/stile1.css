@@ -76,7 +76,9 @@ footer {
   color: white;
   text-align: center;
   padding: 15px 10px;
-  font-size: 0.9rem; 
+  font-size: 0.9rem;
+  margin-top: auto;
+    bottom:0;
 }
 
 /*footer a {

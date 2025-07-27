@@ -8,6 +8,7 @@
   margin:auto;
   position:relative;
   line-height: 0;
+  
 }
 .carousel-container input[type="radio"] {
   display: none;

@@ -99,6 +99,8 @@ ul.book-list li strong, ul.author-list li strong {	/*solo in index.html*/
     padding: 30px 20px;
 	flex:1;
 	position:relative;
+	margin-bottom: 40px;
+	
 }
 
 .container-obj {	/*libro.html*/	
@@ -106,12 +108,14 @@ ul.book-list li strong, ul.author-list li strong {	/*solo in index.html*/
     /*color: #52391c;*/
 	margin-left: 40px;
 	margin-top: 40px;
+	min-height: 400px;
 	max-width: 700px;
 	background-color:rgb(255, 246, 234, 0.9);
 	border-radius: 10px;
 	box-shadow: 0 2px 8px rgba(110, 71, 23, 0.12);
 	padding: 20px 40px;
 	margin-bottom: 66px;
+	position:relative;
 }
 
 ul.elem {		/*libri.html*/
@@ -218,7 +222,7 @@ ul.elem li:hover {		/*libri.html*/
 	display:flex;
 	width:400px;
 	height: 600px;
-	margin-bottom: 66px;
+	margin-bottom: 150px;
 }
 
 .foto img{
