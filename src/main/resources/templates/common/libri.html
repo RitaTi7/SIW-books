@@ -33,7 +33,8 @@
             <div th:unless="${libri.isEmpty()}">
 				<ul class="elem">
 	                <li th:each="libro: ${libri}">
-	                    <span class="titolo"><a th:href="@{'/libro'+'/'+ ${libro.id}}" th:text="${libro.titolo} + ' (' + ${libro.anno} + ')'">titolo (2003)</a></span><br>
+	                    <span class="titolo"><a th:href="@{'/libro'+'/'+ ${libro.id}}" sec:authorize="!hasAuthority('ADMIN')" th:text="${libro.titolo} + ' (' + ${libro.anno} + ')'">titolo (2003)</a></span>
+						<span class="titolo" sec:authorize="hasAuthority('ADMIN')" th:text="${libro.titolo} + ' (' + ${libro.anno} + ')'">titolo (2003)</span><br>
 						<span class="autore" th:if="${libro.autori}" th:each="autore, iterStat : ${libro.autori}">
 							<span th:text="|${autore.nome} ${autore.cognome}|"></span><span th:if="${!iterStat.last}">, </span>
 						</span>

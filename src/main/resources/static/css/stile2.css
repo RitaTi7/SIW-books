@@ -177,9 +177,27 @@ ul.elem li:hover {		/*libri.html*/
 	flex:1;
 	margin-bottom: 85px;
 	
+	
 	/*box-shadow: 0 2px 8px rgba(110, 71, 23, 0.12);*/
 }
 
+/* Checkbox nascosto */
+.expand-toggle {
+    display: none;
+}
+
+.recensioni-riquadro{
+	height: 250px;
+	overflow-y:auto;
+	overflow-x: hidden;
+	padding-right: 5px;
+	transition: height 0.3s ease;
+}
+
+/* Quando checkbox è checked, espandi */
+.expand-toggle:checked + .recensioni-riquadro {
+    height: 650px; 
+}
 
 /* Lista di recensioni in riquadro con stile differenziato */
 .recensioni-riquadro ul {
@@ -201,6 +219,70 @@ ul.elem li:hover {		/*libri.html*/
     transition: background-color 0.3s ease;
 	line-height: 1.1;
 	
+}
+
+.recensioni-riquadro ul li:hover {
+    background-color: #cbb694;
+    cursor: default;
+}
+
+/* Label che funge da pulsante */
+.expand-label {
+    display: block;
+    margin: 15px auto 0 auto;
+    padding: 8px 20px;
+    background-color: #8b5e3c;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    min-width: 140px;
+    text-align: center;
+    user-select: none;
+}
+
+.expand-label:hover {
+    background-color: #3d2a15;
+    transform: translateY(-1px);
+}
+
+/* Icone e testo che cambiano */
+.expand-label::before {
+    content: "▼ ";
+}
+
+.expand-label::after {
+    content: "Espandi vista";
+}
+
+/* Quando è espanso */
+.expand-toggle:checked + .recensioni-riquadro + .expand-label::before {
+    content: "▲ ";
+}
+
+.expand-toggle:checked + .recensioni-riquadro + .expand-label::after {
+    content: "Contrai vista";
+}
+
+/* Il resto del CSS per recensioni rimane uguale... */
+.recensioni-riquadro ul {
+    list-style: none;
+    padding-left: 0;
+    color: #52391c;
+    margin: 0;
+}
+
+.recensioni-riquadro ul li {
+    background-color: #dacfaf;
+    border-left: 5px solid #52391c;
+    box-shadow: 0 1px 3px rgba(82, 57, 28, 0.2);
+    font-style: normal;
+    padding: 5px 18px;
+    margin-bottom: 13px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    line-height: 1.1;
 }
 
 .recensioni-riquadro ul li:hover {

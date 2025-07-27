@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.model.Autore;
+import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Libro;
 import it.uniroma3.siw.model.Recensione;
 import it.uniroma3.siw.service.AutoreService;
+import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.LibroService;
 //import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -31,6 +33,7 @@ public class LibroController {
 	
 	@Autowired LibroService libroService;
 	@Autowired AutoreService autoreService;
+	@Autowired CredentialsService credentialsService;
 	
 	@GetMapping("/libro/{id}")
 	public String mostraLibro(@PathVariable("id") Long id, Model model) {
@@ -44,6 +47,22 @@ public class LibroController {
 		Libro libro=this.libroService.getLibroById(id);
 		Set<Autore> autori= libro.getAutori();
 		List<Recensione> recensioni= libro.getRecensioni();
+		
+/*		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    if (auth != null && auth.isAuthenticated() && !auth.getPrincipal().equals("anonymousUser")) {
+	        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+	        Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+	        model.addAttribute("loggedUser", credentials.getUser());
+	    }*/
+		
+		Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+		
+		if(!(authentication instanceof AnonymousAuthenticationToken)) {
+			UserDetails userDetails= (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			Credentials credentials= this.credentialsService.getCredentials(userDetails.getUsername());
+			model.addAttribute("loggedUser", credentials.getUser());
+		}
+	    
 		model.addAttribute("libro", libro);
 		model.addAttribute("autori", autori);
 		model.addAttribute("recensioni", recensioni);

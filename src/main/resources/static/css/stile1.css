@@ -81,6 +81,16 @@ footer {
     bottom:0;
 }
 
+/*.error-message {
+    color: #d32f2f; /* rosso per errori *
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 5px;
+    display: block;
+}*/
+
+
+
 /*footer a {
   color: var(--color-link);
   text-decoration: none;

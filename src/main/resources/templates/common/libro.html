@@ -75,17 +75,38 @@
 				</div>
 			</div>	
 			<div class="recensioni" style="display:flex; flex-direction: column; flex:1;">
-            	<h2>Recensioni</h4>
+						
+				<h2>Recensioni</h2>
+					<span  sec:authorize="hasAuthority('USER')" >
+						<a class="settings3" th:href="@{'/user/formNuovaRecensione/' + ${libro.id}}"><button type="button">Scrivi</button></a>
+					</span><br>
+					<input type="checkbox" id="expand-toggle" class="expand-toggle">
             	<div class="recensioni-riquadro">
 					<span class="importante" th:if="${recensioni.isEmpty()}"> Non sono presenti recensioni</span>
                 		<ul th:if="${recensioni}">
                     		<li th:each="rec: ${recensioni}">
-								<h4 th:text="${rec.titolo}">Titolo</h4>
+							<span class="settings3" sec:authorize="hasAuthority('USER')" th:if="${loggedUser != null && rec.user.id == loggedUser.id}" style="margin: 20px 0;">
+									<a th:href="@{'/eliminaRecensione/' + ${rec.id} + '/' + ${libro.id}}"><button type="button">Rimuovi</button></a>
+								</span>
+								
+							<!--	<span class="settings3" sec:authorize="hasAuthority('USER')" style="margin-top: 20px;">
+									<p>loggedUser: <span th:text="${loggedUser}"></span></p>
+									<p>rec: <span th:text="${rec}"></span></p>
+									<p>rec.user: <span th:text="${rec.user}"></span></p>-->
+									
+
+								<span class="settings3" sec:authorize="hasAuthority('ADMIN')" style="margin-top: 20px;">
+									<a th:href="@{'/eliminaRecensione/' + ${rec.id} + '/' + ${libro.id}}"><button type="button">Rimuovi</button></a>
+								</span>
+
+								<h4 th:text="${rec.titolo + ' (' + rec.user.email + ')'}">Titolo</h4>
+								
 				    			<span class="importante">voto: <span th:text="${rec.voto}">5</span></span>
 				       			<p th:text="${rec.testo}">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
 							</li>
                 		</ul>
             	</div>
+				<label for="expand-toggle" class="expand-label" th:if="${!recensioni.isEmpty()}"></label>
         	</div>
 			
 			<footer>

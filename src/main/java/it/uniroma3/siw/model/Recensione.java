@@ -1,5 +1,6 @@
 package it.uniroma3.siw.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,6 +10,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Recensione {
@@ -24,10 +26,19 @@ public class Recensione {
 	@Min(1)
 	@Max(5)
 	private Integer voto;
+	
+	@Column(length=2000)
+	@Size(max=2000, message="La recensione non può superare i 2000 caratteri")
 	private String testo;			//cambia i vincoli di colonna ( varying 255 sono pochi)
+	
+//	@Transient
+//	private String usernameUtente;
 	
 	@ManyToOne
 	private Libro libro;
+	
+	@ManyToOne
+	private User user;
 	
 	
 	public Long getId() {
@@ -45,6 +56,9 @@ public class Recensione {
 	public Libro getLibro() {
 		return libro;
 	}
+	public User getUser() {
+		return user;
+	}
 	
 	public void setId(Long id) {
 		this.id = id;
@@ -60,6 +74,9 @@ public class Recensione {
 	}
 	public void setLibro(Libro libro) {
 		this.libro = libro;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	

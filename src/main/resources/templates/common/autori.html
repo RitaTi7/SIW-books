@@ -34,8 +34,9 @@
 		      <div th:unless="${autori.isEmpty()}">
 				<ul class="elem">
 		              <li th:each="autore: ${autori}">
-		              		<span class="titolo"><a th:href="@{'/autore'+'/'+ ${autore.id}}" th:text="|${autore.nome} ${autore.cognome}|">titolo (2003)</a></span><br>
-						 	<!--<span class="autore" th:if="${libro.autori}" th:each="autore, iterStat : ${libro.autori}">
+		              		<span class="titolo"><a th:href="@{'/autore'+'/'+ ${autore.id}}"  sec:authorize="!hasAuthority('ADMIN')" th:text="|${autore.nome} ${autore.cognome}|">Nome Cognome</a></span>
+							<span class="titolo" sec:authorize="hasAuthority('ADMIN')" th:text="|${autore.nome} ${autore.cognome}|">Nome Cognome</span><br>
+							<!--<span class="autore" th:if="${libro.autori}" th:each="autore, iterStat : ${libro.autori}">
 							<span th:text="|${autore.nome} ${autore.cognome}|"></span><span th:if="${!iterStat.last}">, </span>-->
 						</span>
 		              </li>
