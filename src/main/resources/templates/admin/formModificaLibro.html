@@ -36,6 +36,17 @@
 				<span><input type="text" th:field="${libro.anno}"/></span>
 				<span th:if="${#fields.hasErrors('anno')}" th:errors="*{anno}"></span>
 			</div>
+			<div>
+				<label>Genere:</label>
+				<span><input type="text" th:field="${libro.genere}"/></span>
+				<span th:if="${#fields.hasErrors('genere')}" th:errors="*{genere}"></span>
+			</div>
+			<div>
+				<label>Testo:</label>
+				<span><textarea th:field="${libro.trama}"  cols="50" placeholder="Scrivi qui la trama..."></textarea></span>
+				<span th:if="${#fields.hasErrors('trama')}" th:errors="*{trama}"></span>
+			</div>
+
 			<div th:if="${libro.immagini}" class="immagini-esistenti">
 			    <h3>Immagini attuali:</h3>
 			    <p><small>Seleziona le immagini che vuoi rimuovere:</small></p>
@@ -52,7 +63,7 @@
 			       	</ul>			    
 		   		</div>
 			</div>
-			<div th:if="${libro.immagini.isEmpty()}" class="immagini-esistenti">
+			<div th:unless="${libro.immagini}" class="immagini-esistenti">
 			    <p><em>Questo libro non ha ancora immagini.</em></p>
 			</div>
 			<div>

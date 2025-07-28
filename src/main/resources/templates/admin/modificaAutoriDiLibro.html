@@ -49,9 +49,13 @@
 					<a th:href="@{'/libro/' + ${libro.id}}"><button type="button">Fine</button></a>
 				</span>
 			</div>
+			<div class="foto" th:each="img : ${libro.immagini}">
+			    <img th:src="@{'/images/' + ${img}}" alt="Immagine libro" style="max-width:200px;"/>
+			  </div>
 
-			<div class="carousel-container">
-				<input type="radio" name="carousel" id="slide1" checked>	<!--TODO: arbitrario-->
+
+		<!---	<div class="carousel-container">
+				<input type="radio" name="carousel" id="slide1" checked>	<--TODO: arbitrario--
 				<input type="radio" name="carousel" id="slide2">
 				<input type="radio" name="carousel" id="slide3">
 				<div class="carousel-slide">
@@ -64,9 +68,9 @@
 			    	<img src="immagine3.jpg" alt="Immagine 3" />
 				</div>
 
-			  <!-- Pulsanti di navigazione -->
+			  <-- Pulsanti di navigazione --
 				<label for="slide1" class="carousel-prev">&#10094;</label>
-				<label for="slide2" class="carousel-next">&#10095;</label>
+				<label for="slide2" class="carousel-next">&#10095;</label>-->
 			</div>
 			
 

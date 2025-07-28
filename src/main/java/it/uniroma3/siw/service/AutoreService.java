@@ -1,5 +1,6 @@
 package it.uniroma3.siw.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,10 @@ public class AutoreService {
 	
 	public Iterable<Autore> findAutoriNonInLibro(Long idLibro){
 		return this.autoreRepository.findAutoriNonInLibro(idLibro);
-		
 	}
+	
+	public List<Autore> getUltimiAutoriInseriti(int numero){
+		return this.autoreRepository.getUltimiAutoriInseriti(numero);
+	}
+
 }

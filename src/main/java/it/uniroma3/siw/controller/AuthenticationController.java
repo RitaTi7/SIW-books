@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.User;
+import it.uniroma3.siw.service.AutoreService;
 import it.uniroma3.siw.service.CredentialsService;
+import it.uniroma3.siw.service.LibroService;
 import it.uniroma3.siw.service.UserService;
 import jakarta.validation.Valid;
 
@@ -26,6 +28,11 @@ public class AuthenticationController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private LibroService libroService;
+	@Autowired
+	private AutoreService autoreService;
 	
 	@GetMapping("/register")
 	public String mostraFormDiRegistrazione(Model model) {
@@ -42,17 +49,29 @@ public class AuthenticationController {
 	@GetMapping("/")
 	public String index(Model model) {
 		Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-		if(authentication instanceof AnonymousAuthenticationToken)
+		if(authentication instanceof AnonymousAuthenticationToken) {
+			model.addAttribute("ultimiLibri", this.libroService.getUltimiLibriInseriti(3));
+			model.addAttribute("ultimiAutori", this.autoreService.getUltimiAutoriInseriti(3));
 			return "index.html";
+		}
 		else {
 			UserDetails userDetails= (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			Credentials credentials= this.credentialsService.getCredentials(userDetails.getUsername());
-			if(credentials.getRole().equals(Credentials.ADMIN_ROLE))
+			if(credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
+				model.addAttribute("ultimiLibri", this.libroService.getUltimiLibriInseriti(3));
+				model.addAttribute("ultimiAutori", this.autoreService.getUltimiAutoriInseriti(3));
 				return "admin/indexAdmin.html";
-			else if(credentials.getRole().equals(Credentials.USER_ROLE))
+			}
+			else if(credentials.getRole().equals(Credentials.USER_ROLE)) {
+				model.addAttribute("ultimiLibri", this.libroService.getUltimiLibriInseriti(3));
+				model.addAttribute("ultimiAutori", this.autoreService.getUltimiAutoriInseriti(3));
 				return "user/indexUser.html";
-			else
+			}
+			else {
+				model.addAttribute("ultimiLibri", this.libroService.getUltimiLibriInseriti(3));
+				model.addAttribute("ultimiAutori", this.autoreService.getUltimiAutoriInseriti(3));
 				return "index.html";
+			}
 		}
 	}
 	
@@ -70,13 +89,20 @@ public class AuthenticationController {
 		System.out.println("Match? " + credentials.getRole().equals(Credentials.USER_ROLE));
 */		
 		if(credentials.getRole().equals(Credentials.ADMIN_ROLE)) {
-		//	System.out.println("ciao");
+			model.addAttribute("ultimiLibri", this.libroService.getUltimiLibriInseriti(3));
+			model.addAttribute("ultimiAutori", this.autoreService.getUltimiAutoriInseriti(3));
 			return "admin/indexAdmin";
 		}
-		if(credentials.getRole().equals(Credentials.USER_ROLE))
+		if(credentials.getRole().equals(Credentials.USER_ROLE)) {
+			model.addAttribute("ultimiLibri", this.libroService.getUltimiLibriInseriti(3));
+			model.addAttribute("ultimiAutori", this.autoreService.getUltimiAutoriInseriti(3));
 			return "user/indexUser.html";
-		else
+		}
+		else {
+			model.addAttribute("ultimiLibri", this.libroService.getUltimiLibriInseriti(3));
+			model.addAttribute("ultimiAutori", this.autoreService.getUltimiAutoriInseriti(3));		
 			return "index.html";
+		}
 	}
 	
 	@PostMapping("/register")

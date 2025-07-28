@@ -121,6 +121,7 @@ ul.book-list li strong, ul.author-list li strong {	/*solo in index.html*/
 ul.elem {		/*libri.html*/
     list-style: none;
     padding: 0;
+	margin-bottom: 30px;		/*ultima cosa modificata*/
 }
 
 ul.elem li {	/*libri.html*/
@@ -296,7 +297,6 @@ ul.elem li:hover {		/*libri.html*/
 	align-items: center;
 	position:relative;
 	line-height: 0;
-	border: solid;
 	/*flex:1;*/	
 	overflow: hidden;
 	margin-left:200px;

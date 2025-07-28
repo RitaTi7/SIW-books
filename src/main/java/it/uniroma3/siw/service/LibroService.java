@@ -1,9 +1,11 @@
 package it.uniroma3.siw.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import it.uniroma3.siw.model.Libro;
 import it.uniroma3.siw.repository.LibroRepository;
@@ -37,4 +39,8 @@ public class LibroService {
 		return this.libroRepository.findLibriNonInAutore(idAutore);
 	}
 	
+	public List<Libro> getUltimiLibriInseriti(int numero){
+		return this.libroRepository.getUltimiLibriInseriti(numero);
+	}
+
 }

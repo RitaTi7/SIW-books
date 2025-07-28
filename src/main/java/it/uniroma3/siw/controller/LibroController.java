@@ -29,6 +29,7 @@ import it.uniroma3.siw.model.Autore;
 import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Libro;
 import it.uniroma3.siw.model.Recensione;
+import it.uniroma3.siw.model.User;
 import it.uniroma3.siw.service.AutoreService;
 import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.LibroService;
@@ -61,19 +62,34 @@ public class LibroController {
 	        Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
 	        model.addAttribute("loggedUser", credentials.getUser());
 	    }*/
+		boolean puoScrivere= false;
 		
 		Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
 		
 		if(!(authentication instanceof AnonymousAuthenticationToken)) {
 			UserDetails userDetails= (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			Credentials credentials= this.credentialsService.getCredentials(userDetails.getUsername());
+			User user= credentials.getUser();
 			model.addAttribute("loggedUser", credentials.getUser());
+			puoScrivere= utenteCorrenteHaRecensito(recensioni, user);
 		}
-	    
+		
+		
+		
 		model.addAttribute("libro", libro);
 		model.addAttribute("autori", autori);
 		model.addAttribute("recensioni", recensioni);
+		model.addAttribute("puoScrivere", puoScrivere);
 		return "common/libro.html";
+	}
+	
+	/*metodo di supporto*/
+	private boolean utenteCorrenteHaRecensito(List<Recensione> recensioni, User user) {
+		for(Recensione r: recensioni) {
+			if(r.getUser().equals(user))
+				return false;
+		}
+		return true;
 	}
 	
 	@GetMapping("/libro")
@@ -180,6 +196,8 @@ public class LibroController {
 			Libro libroEsistente= this.libroService.getLibroById(id);
 			libroEsistente.setTitolo(libroModificato.getTitolo());
 			libroEsistente.setAnno(libroModificato.getAnno());
+			libroEsistente.setGenere(libroModificato.getGenere());
+			libroEsistente.setTrama(libroModificato.getTrama());
 			
 			if(immaginiDaRimuovere != null) {
 		        for(String imgName : immaginiDaRimuovere) {
@@ -205,8 +223,8 @@ public class LibroController {
 		        }
 		    }
 			this.libroService.save(libroEsistente);
-			model.addAttribute("libri", this.libroService.getAllLibri());
-			return "admin/aggiornaLibri.html";
+			//model.addAttribute("libri", this.libroService.getAllLibri());
+			return "redirect:/libro/" + libroEsistente.getId();
 		}
 	}
 	

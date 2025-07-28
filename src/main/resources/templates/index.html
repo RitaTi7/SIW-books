@@ -26,8 +26,8 @@
   </header>
 
   <div id="main">
-    <img 
-      src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=900&q=80" 
+    <img  
+      src="/images/book.jpg"
       alt="Immagine Biblioteca" 
       class="home-image"/>
     <p class="intro-text">
@@ -36,34 +36,23 @@
 
     <section class="evidenza">
       <h2>Libri in evidenza</h2>
-      <ul class="book-list">
-        <li>
-          <strong>Il nome della rosa</strong>
-          <span>Umberto Eco</span>
-        </li>
-        <li>
-          <strong>Se questo è un uomo</strong>
-          <span>Primo Levi</span>
-        </li>
-        <li>
-          <strong>La coscienza di Zeno</strong>
-          <span>Italo Svevo</span>
+      <ul class="book-list" th:if="${ultimiLibri}">
+        <li th:each="libro: ${ultimiLibri}">
+          <strong th:text="${libro.titolo}">Il nome della rosa</strong>
+		  <span th:if="${libro.autori}" th:each="autore, iterStat : ${libro.autori}">
+  			<span th:text="|${autore.nome} ${autore.cognome}"></span><span th:if="${!iterStat.last}">, </span>
+  		  </span>
         </li>
       </ul>
     </section>
 
     <section class="evidenza">
       <h2>Autori in evidenza</h2>
-      <ul class="author-list">
-        <li>
-          <strong>Italo Calvino</strong>
+      <ul class="author-list" th:if="${ultimiAutori}">
+        <li th:each="autore : ${ultimiAutori}">
+          <strong th:text="|${autore.nome} ${autore.cognome}|">Italo Calvino</strong>
         </li>
         <li>
-          <strong>Elsa Morante</strong>
-        </li>
-        <li>
-          <strong>Leonardo Sciascia</strong>
-        </li>
       </ul>
     </section>
   </div>

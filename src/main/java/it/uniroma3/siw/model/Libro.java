@@ -17,6 +17,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 
 @Entity
@@ -34,11 +35,12 @@ public class Libro {
 	private Integer anno;
 	
 //	@NotBlank
-//	@Column(length= 500)
-//	private String trama;	//TODO
-//	
+	@Column(length=1000)
+	@Size(max=1000, message="La trama non può superare i 1000 caratteri")
+	private String trama;
+	
 //	@NotBlank
-//	private String genere;	//TODO
+	private String genere;
 	
 	@ManyToMany
 	private Set<Autore> autori;
@@ -49,9 +51,7 @@ public class Libro {
 	@ElementCollection
 	List<String> immagini = new ArrayList<>();
 	
-	//collana			//TODO
-	//genere
-	//casa editrice??
+
 	
 	
 	public Long getId() {
@@ -63,9 +63,12 @@ public class Libro {
 	public Integer getAnno() {
 		return anno;
 	}
-//	public String getTrama() {
-//		return trama;
-//	}
+	public String getTrama() {
+		return trama;
+	}
+	public String getGenere() {
+		return genere;
+	}
 	public Set<Autore> getAutori() {
 		return autori;
 	}
@@ -85,9 +88,12 @@ public class Libro {
 	public void setAnno(Integer anno) {
 		this.anno = anno;
 	}
-//	public void setTrama(String trama) {
-//		this.trama = trama;
-//	}
+	public void setTrama(String trama) {
+		this.trama = trama;
+	}
+	public void setGenere(String genere) {
+		this.genere = genere;
+	}
 	public void setAutori(Set<Autore> autori) {
 		this.autori = autori;
 	}
@@ -99,25 +105,9 @@ public class Libro {
 	}
 	
 	
-//    public List<String> getListaImmagini() {
-//        if (immagini == null || immagini.trim().isEmpty()) {
-//            return new ArrayList<>();
-//        }
-//        return Arrays.asList(immagini.split(","));
-//    }
-//    
-//    public void aggiungiImmagini(List<String> nuoveImmagini) {
-//        if (nuoveImmagini == null || nuoveImmagini.isEmpty()) {
-//            return;
-//        }
-//        
-//        List<String> immaginiEsistenti = getListaImmagini();
-//        immaginiEsistenti.addAll(nuoveImmagini);
-//        this.immagini = String.join(",", immaginiEsistenti);
-//    }
 
 	
-	//TODO: bisogna inserire anche il metodo ToString
+	
 	@Override
 	public boolean equals(Object obj) {
 		if(obj==null || obj.getClass()!=this.getClass())
