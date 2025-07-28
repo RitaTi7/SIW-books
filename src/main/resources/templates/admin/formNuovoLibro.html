@@ -21,7 +21,7 @@
 			</nav>
 		</header>		
 		
-		<form th:action="@{/admin/libro}" method="POST" th:object="${libro}">
+		<form th:action="@{/admin/libro}" method="POST"  enctype="multipart/form-data" th:object="${libro}">
 			<h1>Aggiungi un libro</h1>
 			<div th:if="${#fields.hasGlobalErrors()}">
 				<p th:each="err: ${#fields.globalErrors()}" th:text="${err}">...</p>
@@ -37,12 +37,17 @@
 				<span><input type="text" th:field="${libro.anno}"/></span>
 				<span th:if="${#fields.hasErrors('anno')}" th:errors="*{anno}"></span>
 			</div>
+			<div>
+			<label>Immagini del libro:</label>
+			<span><input type="file" name="fileImmagini" multiple accept="image/*"/></span>
+			</div>
 			
 			<div>
 				<span><button type="submit">Conferma</button></span>
 				<a th:href="@{/admin/aggiornaLibri}"><button type="button">Annulla</button></a>
 			</div>
 		</form>
+		<img th:src="@{'/images/' + ${img}}" alt="immagine libro">
 
 		<footer>
 			&copy; 2025 Siw Books

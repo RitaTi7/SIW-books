@@ -1,5 +1,10 @@
 package it.uniroma3.siw.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Autore;
 import it.uniroma3.siw.model.Libro;
@@ -51,13 +58,24 @@ public class AutoreController {
 	}
 	
 	@PostMapping("/admin/autore")
-	public String nuovoAutore(@Valid @ModelAttribute("autore") Autore autore, BindingResult bindingResult, Model model) {
+	public String nuovoAutore(@Valid @ModelAttribute("autore") Autore autore, BindingResult bindingResult, @RequestParam("fileImmagine") MultipartFile fileImmagine, Model model)  throws IOException{
 		if(bindingResult.hasErrors()) {
 			return "admin/formNuovoAutore.html";
 		}
 		else {
 			this.autoreService.save(autore);
-			model.addAttribute("autore", autore);
+			if (fileImmagine != null && !fileImmagine.isEmpty()) {
+		        String uploadDir = "uploads/images/";
+		        Files.createDirectories(Paths.get(uploadDir));
+
+		        String fileName = autore.getId() + "_" + fileImmagine.getOriginalFilename();
+		        Path filePath = Paths.get(uploadDir, fileName);
+		        Files.copy(fileImmagine.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+		        System.out.println("Salvo immagine in: " + filePath.toAbsolutePath());
+
+		        autore.setImmagine(fileName);
+		        this.autoreService.save(autore); // Secondo salvataggio per aggiornare con immagine
+		    }
 			return "redirect:/autore/" + autore.getId();
 		}
 	}
@@ -95,9 +113,12 @@ public class AutoreController {
 	}
 	
 	@PostMapping("/admin/modificaAutore/{id}")
-	public String modificaAutore(@PathVariable("id") Long id, @Valid @ModelAttribute("autore") Autore autoreModificato, BindingResult bindingResult, Model model) {
-		if(bindingResult.hasErrors())
+	public String modificaAutore(@PathVariable("id") Long id, @Valid @ModelAttribute("autore") Autore autoreModificato, BindingResult bindingResult, @RequestParam("fileImmagine") MultipartFile immagine, Model model) throws IOException {
+		if(bindingResult.hasErrors()) {
+			System.out.println("Errore nel binding: " + bindingResult.getAllErrors());
+			model.addAttribute("autore", this.autoreService.getAutoreById(id));
 			return "admin/formModificaAutore.html";
+		}
 		else {
 			Autore autoreEsistente= this.autoreService.getAutoreById(id);
 			autoreEsistente.setNome(autoreModificato.getNome());
@@ -105,8 +126,25 @@ public class AutoreController {
 			autoreEsistente.setDataNascita(autoreModificato.getDataNascita());
 			autoreEsistente.setDataMorte(autoreModificato.getDataMorte());
 			autoreEsistente.setNazionalita(autoreModificato.getNazionalita());
+			
+			 if (immagine != null && !immagine.isEmpty()) {
+		            String uploadDir = "uploads/images/";
+		            Files.createDirectories(Paths.get(uploadDir));
+		            
+		            
+		            if (autoreEsistente.getImmagine() != null && !autoreEsistente.getImmagine().isEmpty()) {
+		                Path oldFilePath = Paths.get(uploadDir, autoreEsistente.getImmagine());
+		                Files.deleteIfExists(oldFilePath);
+		            }
+		            String fileName = id + "_" + immagine.getOriginalFilename();
+		            Path filePath = Paths.get(uploadDir, fileName);
+		            Files.copy(immagine.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+		            autoreEsistente.setImmagine(fileName);
+			 }
+			 
 			this.autoreService.save(autoreEsistente);
 			model.addAttribute("autori", this.autoreService.getAllAutori());
+			
 			return "admin/aggiornaAutori.html";
 		}
 	}

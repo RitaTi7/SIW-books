@@ -1,5 +1,10 @@
 package it.uniroma3.siw.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +22,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Autore;
 import it.uniroma3.siw.model.Credentials;
@@ -89,18 +96,51 @@ public class LibroController {
 		return "admin/formNuovoLibro.html";
 	}
 	
+//	@PostMapping("/admin/libro")
+//	public String nuovoLibro(@RequestParam("immagini") List<MultipartFile> immagini,
+//			@Valid @ModelAttribute("libro") Libro libro, BindingResult bindingResult, Model model) throws IOException {
+//		if(bindingResult.hasErrors()) {
+//			return "admin/formNuovoLibro";
+//		}
+//		else {
+//			this.libroService.save(libro);
+//			model.addAttribute("libro", libro);
+//			return "redirect:/libro/" + libro.getId();
+//		}
+//	}
+	
 	@PostMapping("/admin/libro")
-	public String nuovoLibro(@Valid @ModelAttribute("libro") Libro libro, BindingResult bindingResult, Model model) {
+	public String nuovoLibro(@RequestParam("fileImmagini") List<MultipartFile> immagini,
+			@Valid @ModelAttribute("libro") Libro libro, BindingResult bindingResult, Model model) throws IOException {
 		if(bindingResult.hasErrors()) {
+			System.out.println("Errore nel binding: " + bindingResult.getAllErrors());
 			return "admin/formNuovoLibro";
 		}
 		else {
 			this.libroService.save(libro);
-			model.addAttribute("libro", libro);
+			String uploadDir = "uploads/images/";
+			Files.createDirectories(Paths.get(uploadDir));
+			
+			for (MultipartFile file : immagini) {
+	            if (!file.isEmpty()) {
+	                // Nome originale (potresti volerlo modificare per evitare conflitti)
+	               // String fileName = file.getOriginalFilename();
+	                String fileName = libro.getId() + "_"+ file.getOriginalFilename();
+	                
+	                // Salva fisicamente il file
+	                Path filePath = Paths.get(uploadDir, fileName);
+	                Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+	                System.out.println("Salvo immagine in: " + filePath.toAbsolutePath());
+	                // Aggiungi il nome del file all’oggetto libro
+	                // Assumendo che Libro abbia un campo List<String> immagini (o simile)
+	                libro.getImmagini().add(fileName);
+	            }
+	        }
+			this.libroService.save(libro);
 			return "redirect:/libro/" + libro.getId();
 		}
 	}
-	
+
 	@GetMapping("/admin/aggiornaLibri")
 	public String aggiornaLibri(Model model) {
 		model.addAttribute("libri", this.libroService.getAllLibri());
@@ -131,13 +171,39 @@ public class LibroController {
 	
 	//@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/admin/modificaLibro/{id}")
-	public String modificaLibro(@PathVariable("id") Long id, @Valid @ModelAttribute("libro") Libro libroModificato, BindingResult bindingResult, Model model) {
+	public String modificaLibro(@PathVariable("id") Long id, @Valid @ModelAttribute("libro") Libro libroModificato, 
+			BindingResult bindingResult, @RequestParam(value = "fileImmagini", required = false) List<MultipartFile> immaginiNuove,
+		    @RequestParam(value = "immaginiDaRimuovere", required = false) List<String> immaginiDaRimuovere, Model model) throws IOException{
 		if(bindingResult.hasErrors())
 			return "admin/formModificaLibro.html";
 		else {
 			Libro libroEsistente= this.libroService.getLibroById(id);
 			libroEsistente.setTitolo(libroModificato.getTitolo());
 			libroEsistente.setAnno(libroModificato.getAnno());
+			
+			if(immaginiDaRimuovere != null) {
+		        for(String imgName : immaginiDaRimuovere) {
+		            libroEsistente.getImmagini().remove(imgName);
+		            
+		            // Opzionale: elimina il file dal filesystem
+		            Path filePath = Paths.get("uploads/images/", imgName);
+		            Files.deleteIfExists(filePath);
+		        }
+		    }
+			
+			if(immaginiNuove != null) {
+		        String uploadDir = "uploads/images/";
+		        Files.createDirectories(Paths.get(uploadDir));
+
+		        for(MultipartFile file : immaginiNuove) {
+		            if(!file.isEmpty()) {
+		                String fileName = libroEsistente.getId() + "_" + file.getOriginalFilename();
+		                Path filePath = Paths.get(uploadDir, fileName);
+		                Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+		                libroEsistente.getImmagini().add(fileName);
+		            }
+		        }
+		    }
 			this.libroService.save(libroEsistente);
 			model.addAttribute("libri", this.libroService.getAllLibri());
 			return "admin/aggiornaLibri.html";

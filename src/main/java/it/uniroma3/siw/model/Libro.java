@@ -1,10 +1,13 @@
 package it.uniroma3.siw.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -43,7 +46,9 @@ public class Libro {
 	@OneToMany(mappedBy="libro", cascade={CascadeType.REMOVE})
 	private List<Recensione> recensioni;
 	
-	//immagini			//TODO
+	@ElementCollection
+	List<String> immagini = new ArrayList<>();
+	
 	//collana			//TODO
 	//genere
 	//casa editrice??
@@ -67,6 +72,9 @@ public class Libro {
 	public List<Recensione> getRecensioni() {
 		return recensioni;
 	}
+	public List<String> getImmagini() {
+		return immagini;
+	}
 	
 	public void setId(Long id) {
 		this.id = id;
@@ -86,6 +94,28 @@ public class Libro {
 	public void setRecensioni(List<Recensione> recensioni) {
 		this.recensioni = recensioni;
 	}
+	public void setImmagini(List<String> immagini) {
+		this.immagini = immagini;
+	}
+	
+	
+//    public List<String> getListaImmagini() {
+//        if (immagini == null || immagini.trim().isEmpty()) {
+//            return new ArrayList<>();
+//        }
+//        return Arrays.asList(immagini.split(","));
+//    }
+//    
+//    public void aggiungiImmagini(List<String> nuoveImmagini) {
+//        if (nuoveImmagini == null || nuoveImmagini.isEmpty()) {
+//            return;
+//        }
+//        
+//        List<String> immaginiEsistenti = getListaImmagini();
+//        immaginiEsistenti.addAll(nuoveImmagini);
+//        this.immagini = String.join(",", immaginiEsistenti);
+//    }
+
 	
 	//TODO: bisogna inserire anche il metodo ToString
 	@Override

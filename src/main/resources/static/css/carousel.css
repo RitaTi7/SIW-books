@@ -51,7 +51,7 @@
   cursor: pointer;
   user-select: none;
 }
-/* Posizionamento pulsanti */
+/*Posizionamento pulsanti */
 #slide1:checked ~ .carousel-prev {
   left: 10px;
   /* Per esempio può andare a slide3 */

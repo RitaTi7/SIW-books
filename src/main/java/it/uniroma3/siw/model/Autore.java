@@ -36,7 +36,9 @@ public class Autore {
 	@PastOrPresent(message="la data non può essere futura")
 	private LocalDate dataMorte;
 	@NotBlank
-	private String nazionalita;			//deve essere scelto da un elenco??-> NO
+	private String nazionalita;
+	
+	private String immagine;
 	
 	
 	@ManyToMany(mappedBy="autori")
@@ -66,6 +68,9 @@ public class Autore {
 	public List<Libro> getLibri() {
 		return libri;
 	}
+	public String getImmagine() {
+		return immagine;
+	}
 	
 	public void setId(Long id) {
 		this.id = id;
@@ -88,8 +93,11 @@ public class Autore {
 	public void setLibri(List<Libro> libri) {
 		this.libri = libri;
 	}
+	public void setImmagine(String immagine) {
+		this.immagine = immagine;
+	}
 	
-	//TODO: metodo ToString?
+	
 	@Override
 	public boolean equals(Object obj) {
 		if(obj==null || obj.getClass()!=this.getClass())

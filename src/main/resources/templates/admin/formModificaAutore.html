@@ -21,7 +21,7 @@
 			</nav>
 		</header>		
 
-		<form th:action="@{'/admin/modificaAutore/' + ${autore.id}}" method="POST" th:object="${autore}">
+		<form th:action="@{'/admin/modificaAutore/' + ${autore.id}}" method="POST" th:object="${autore}" enctype="multipart/form-data">
 			<h1 style="margin: 0 50px;">Modifica l'autore</h1>
 			<div th:if="${#fields.hasGlobalErrors()}">
 				<p th:each="err: ${#fields.globalErrors()}" th:text="${err}">...</p>
@@ -54,6 +54,13 @@
 				<span><input type="text" th:field="${autore.nazionalita}"/></span>
 				<span th:if="${#fields.hasErrors('nazionalita')}" th:errors="*{nazionalita}"></span>
 			</div>
+			<div>
+		    	<label>Immagine autore:</label>
+		    	<input type="file" name="fileImmagine" accept="image/*"/>
+		    	<br/>
+		    	<img th:if="${autore.immagine != null}" th:src="@{'/images/' + ${autore.immagine}}" alt="Immagine autore" width="100"/>
+			 </div>
+		  
 			
 			<div>
 				<span><button type="submit">Conferma</button></span>

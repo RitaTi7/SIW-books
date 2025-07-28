@@ -20,7 +20,7 @@
 			</nav>
 		</header>		
 		
-		<form th:action="@{'/admin/modificaLibro/' + ${libro.id}}" method="POST" th:object="${libro}">
+		<form th:action="@{'/admin/modificaLibro/' + ${libro.id}}" method="POST" th:object="${libro}" enctype="multipart/form-data">
 			<h1>Modifica il libro</h1>
 			<div th:if="${#fields.hasGlobalErrors()}">
 				<p th:each="err: ${#fields.globalErrors()}" th:text="${err}">...</p>
@@ -35,6 +35,30 @@
 				<label>Anno:</label>
 				<span><input type="text" th:field="${libro.anno}"/></span>
 				<span th:if="${#fields.hasErrors('anno')}" th:errors="*{anno}"></span>
+			</div>
+			<div th:if="${libro.immagini}" class="immagini-esistenti">
+			    <h3>Immagini attuali:</h3>
+			    <p><small>Seleziona le immagini che vuoi rimuovere:</small></p>
+			    
+			    <div th:each="immagine : ${libro.immagini}" class="immagine-preview">
+					<ul>
+			           <li th:each="img : ${libro.immagini}">
+			               <img th:src="@{'/images/' + ${img}}" width="100" />
+			               <label>
+			                   <input type="checkbox" name="immaginiDaRimuovere" th:value="${img}" />
+			                   Rimuovi
+			               </label>
+			           </li>
+			       	</ul>			    
+		   		</div>
+			</div>
+			<div th:if="${libro.immagini.isEmpty()}" class="immagini-esistenti">
+			    <p><em>Questo libro non ha ancora immagini.</em></p>
+			</div>
+			<div>
+			<label>Aggiungi nuove immagini:</label>
+			<span><input type="file" name="fileImmagini" multiple accept="image/*"/></span>
+			<small>Puoi selezionare più immagini tenendo premuto Ctrl (o Cmd su Mac)</small>
 			</div>
 			<div>
 				<span><button type="submit">Conferma</button></span>

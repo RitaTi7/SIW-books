@@ -55,6 +55,9 @@
 					</div>
 				<!--<div th:if="${libro.isEmpty()}">Questo libro non esiste</div>-->
 				</div>
+				<div th:each="img : ${libro.immagini}">
+				    <img th:src="@{'/images/' + ${img}}" alt="Immagine libro" style="max-width:200px;"/>
+				  </div>
 	    		<div class="carousel-container">
 					<input type="radio" name="carousel" id="slide1" checked>	<!--TODO: arbitrario-->
 					<input type="radio" name="carousel" id="slide2">
@@ -108,6 +111,7 @@
             	</div>
 				<label for="expand-toggle" class="expand-label" th:if="${!recensioni.isEmpty()}"></label>
         	</div>
+			
 			
 			<footer>
 	    		&copy; 2025 Siw Books
